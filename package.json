@@ -1,0 +1,18 @@
+{
+  "name": "root",
+  "private": true,
+  "devDependencies": {
+    "lerna": "^4.0.0"
+  },
+  "scripts": {
+    "bootstrap": "lerna bootstrap --hoist -- --no-optional",
+    "bootstrap:prod": "lerna bootstrap -- --production --no-optional",
+    "bootstrap:build": "lerna bootstrap --hoist -- --no-optional",
+    "build": "lerna run build",
+    "start": "lerna run --scope app start --stream",
+    "start:debug": "lerna run --stream --scope app start:debug",
+    "clean": "lerna run clean",
+    "clean:deps": "lerna clean --yes",
+    "fixversions": "syncpack fix-mismatches"
+  }
+}

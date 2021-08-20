@@ -1,0 +1,102 @@
+[GET] /healthcheck
+ping pong
+
+[GET] /school/page
+200
+400
+404
+500
+503
+
+{
+ "results": []
+}
+
+{ 
+ "errorType": "",
+ "errorMessage": ""
+}
+
+[POST] /school/page
+201
+400
+404
+500
+503
+
+[PUT] /school/page
+201
+400
+404
+500
+503
+
+[DELETE] /school/page
+201
+400
+404
+500
+503
+
+[GET] /school/page/news
+200
+400
+404
+500
+503
+
+[POST] /school/page/news
+201
+400
+404
+500
+503
+
+[PUT] /school/page/news
+201
+400
+404
+500
+503
+
+[DELETE] /school/page/news
+201
+400
+404
+500
+503
+
+[GET] /school/student
+200
+400
+404
+500
+503
+
+[POST] /school/student
+201
+400
+404
+500
+503
+
+[PUT] /school/student
+201
+400
+404
+500
+503
+
+[DELETE] /school/student
+201
+400
+404
+500
+503
+
+[PATCH] /school/student
+201
+400
+404
+500
+503

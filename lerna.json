@@ -1,0 +1,6 @@
+{
+  "packages": [
+    "newsfeed-bff/*"
+  ],
+  "version": "0.0.0"
+}
