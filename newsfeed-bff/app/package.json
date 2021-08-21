@@ -3,14 +3,14 @@
   "version": "0.0.0",
   "description": "> TODO: description",
   "author": "yunho0520 <yunho0520@gmail.com>",
-  "homepage": "https://github.com/yunhojang/for-newsfeed-task#readme",
+  "homepage": "https://github.com/yunho0520/for-newsfeed-task#readme",
   "license": "ISC",
   "directories": {
     "test": "__tests__"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yunhojang/for-newsfeed-task.git"
+    "url": "git+https://github.com/yunho0520/for-newsfeed-task.git"
   },
   "scripts": {
     "prebuild": "rimraf dist",
@@ -30,15 +30,21 @@
     "clean": "rimraf dist"
   },
   "bugs": {
-    "url": "https://github.com/yunhojang/for-newsfeed-task/issues"
+    "url": "https://github.com/yunho0520/for-newsfeed-task/issues"
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",
+    "@nestjs/axios": "^0.0.1",
+    "@nestjs/config": "^1.0.1",
     "@nestjs/core": "^8.0.0",
     "@nestjs/platform-express": "^8.0.0",
+    "@nestjs/swagger": "^5.0.9",
+    "swagger-ui-express": "^4.1.6",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "rxjs": "^7.2.0"
+    "rxjs": "^7.2.0",
+    "@school/page": "^0.0.1",
+    "@school/student": "^0.0.1"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",

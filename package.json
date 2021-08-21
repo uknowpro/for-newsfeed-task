@@ -14,5 +14,8 @@
     "clean": "lerna run clean",
     "clean:deps": "lerna clean --yes",
     "fixversions": "syncpack fix-mismatches"
+  },
+  "dependencies": {
+    "@nestjs/axios": "0.0.1"
   }
 }

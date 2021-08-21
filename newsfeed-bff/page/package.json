@@ -1,5 +1,5 @@
 {
-  "name": "@newsfeed-bff/common",
+  "name": "@school/page",
   "version": "0.0.1",
   "main": "dist/index",
   "private": true,
@@ -27,7 +27,8 @@
     "@nestjs/swagger": "^5.0.9",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "rxjs": "^7.2.0"
+    "rxjs": "^7.2.0",
+    "@newsfeed-bff/common": "^0.0.1"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",
