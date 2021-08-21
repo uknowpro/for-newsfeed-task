@@ -5,7 +5,6 @@ import { PageController } from './page.controller';
 import { PageService } from './page.service';
 import { NewsController } from './news.controller';
 import { NewsService } from './news.service';
-// import { RaideaApiModule } from '@carplat/raidea-api';
 import { REQUEST } from '@nestjs/core';
 
 @Module({
