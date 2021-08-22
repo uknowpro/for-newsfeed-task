@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Put, Headers, Query, Param, Post, Delete, HttpException, HttpStatus } from '@nestjs/common';
+import { Body, Controller, Get, Put, Headers, Query, Param, Post, Delete, HttpException, HttpStatus, SetMetadata } from '@nestjs/common';
 import { 
   ApiBearerAuth, 
   ApiOperation, 
@@ -13,7 +13,7 @@ import {
   ApiUnauthorizedResponse, 
   getSchemaPath 
 } from '@nestjs/swagger';
-import { Result } from '@newsfeed-bff/common';
+import { Result } from '@newsfeed/common';
 import { PageService } from './page.service';
 import { CreatePageDto } from './dto/create-page.dto';
 import { UpdatePageDto } from './dto/update-page.dto';
@@ -28,6 +28,7 @@ export class PageController {
   }
 
   @Post('')
+  @SetMetadata('role', 'admin')
   @ApiOperation({ 
     summary: '학교 페이지를 생성',
     description: `
@@ -61,17 +62,11 @@ export class PageController {
     @Headers('Authorization') authorization: string,
     @Body() body: CreatePageDto
   ): Promise<any> {
-    // try {
-    //   return await this.pageService.remove(id);
-    // } catch (err) {
-    //   if (err instanceof NotFoundException) {
-    //     throw new HttpException(err, HttpStatus.BAD_REQUEST);
-    //   }
-    //   throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
-    // }
+    return await this.pageService.createOne(body);
   }
 
   @Get('')
+  @SetMetadata('role', ['admin', 'user'])
   @ApiOperation({ 
     summary: '학교 페이지들 또는 학생이 구독중인 페이지들을 조회',
     description: `
@@ -108,17 +103,11 @@ export class PageController {
     @Headers('Authorization') authorization: string, 
     @Query('subscriptorId') subscriptorId: string
   ): Promise<Result<PageResponse[]>> {
-    // try {
-    //   return await this.newsService.remove(id);
-    // } catch (err) {
-    //   if (err instanceof NotFoundException) {
-    //     throw new HttpException(err, HttpStatus.BAD_REQUEST);
-    //   }
-    //   throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
-    // }
+    return await this.pageService.findAll(subscriptorId);
   }
 
   @Get(':pageId')
+  @SetMetadata('role', ['admin', 'user'])
   @ApiOperation({ 
     summary: '학교 페이지를 조회',
     description: `
@@ -152,17 +141,11 @@ export class PageController {
     @Headers('Authorization') authorization: string, 
     @Param('pageId') pageId: string
   ): Promise<Result<PageResponse>> {
-    // try {
-    //   return await this.pageService.remove(id);
-    // } catch (err) {
-    //   if (err instanceof NotFoundException) {
-    //     throw new HttpException(err, HttpStatus.BAD_REQUEST);
-    //   }
-    //   throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
-    // }
+    return await this.pageService.findOne(pageId);
   }
 
   @Put(':pageId')
+  @SetMetadata('role', 'admin')
   @ApiOperation({ 
     summary: '학교 페이지를 수정',
     description: `
@@ -187,17 +170,11 @@ export class PageController {
     @Param('pageId') pageId: string,
     @Body() body: UpdatePageDto
   ): Promise<any> {
-    // try {
-    //   return await this.pageService.remove(id);
-    // } catch (err) {
-    //   if (err instanceof NotFoundException) {
-    //     throw new HttpException(err, HttpStatus.BAD_REQUEST);
-    //   }
-    //   throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
-    // }
+    return await this.pageService.updateOne(pageId, body);
   }
 
   @Delete(':pageId')
+  @SetMetadata('role', 'admin')
   @ApiOperation({ 
     summary: '학교 페이지를 삭제',
     description: `
@@ -221,13 +198,6 @@ export class PageController {
     @Headers('Authorization') authorization: string, 
     @Param('pageId') pageId: string
   ): Promise<any> {
-    // try {
-    //   return await this.pageService.remove(id);
-    // } catch (err) {
-    //   if (err instanceof NotFoundException) {
-    //     throw new HttpException(err, HttpStatus.BAD_REQUEST);
-    //   }
-    //   throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
-    // }
+    return await this.pageService.removeOne(pageId);
   }
 }

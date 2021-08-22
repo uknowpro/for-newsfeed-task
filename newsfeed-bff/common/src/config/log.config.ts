@@ -37,4 +37,4 @@ const configs = {
   },
 }
 
-export default () => configs[env];
+export default () => (configs[env]);

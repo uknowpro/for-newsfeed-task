@@ -1,5 +1,5 @@
 {
-  "name": "@school/student",
+  "name": "@newsfeed/student",
   "version": "0.0.1",
   "main": "dist/index",
   "private": true,
@@ -25,10 +25,15 @@
     "@nestjs/core": "^8.0.0",
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/swagger": "^5.0.9",
+    "@nestjs/mongoose": "^8.0.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
-    "@newsfeed-bff/common": "^0.0.1"
+    "mongoose": "^5.13.7",
+    "bcrypt": "^5.0.1",
+    "validator": "^11.1.0",
+    "@newsfeed/common": "^0.0.1",
+    "@newsfeed/mongo": "^0.0.1"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Put, Headers, Query, Param, Post, Delete, HttpException, HttpStatus } from '@nestjs/common';
+import { Body, Controller, Get, Put, Headers, Query, Param, Post, Delete, HttpException, HttpStatus, SetMetadata } from '@nestjs/common';
 import { 
   ApiBearerAuth, 
   ApiOperation, 
@@ -12,7 +12,7 @@ import {
   ApiUnauthorizedResponse,
   getSchemaPath 
 } from '@nestjs/swagger';
-import { Result } from '@newsfeed-bff/common';
+import { Result } from '@newsfeed/common';
 import { NewsService } from './news.service';
 import { CreateNewsDto } from './dto/create-news.dto';
 import { UpdateNewsDto } from './dto/update-news.dto';
@@ -27,6 +27,7 @@ export class NewsController {
   }
 
   @Post(':pageId/news')
+  @SetMetadata('role', 'admin')
   @ApiOperation(
     { 
       summary: '학교 소식을 생성',
@@ -74,6 +75,7 @@ export class NewsController {
   }
 
   @Get(':pageId/news')
+  @SetMetadata('role', 'admin')
   @ApiOperation({ 
     summary: '학교 소식들을 조회',
     description: `
@@ -117,8 +119,9 @@ export class NewsController {
     //   throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
     // }
   }
-
+  
   @Get(':pageId/news/:newsId')
+  @SetMetadata('role', 'admin')
   @ApiOperation({ 
     summary: '학교 소식을 조회',
     description: `
@@ -162,8 +165,9 @@ export class NewsController {
     //   throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
     // }
   }
-
+  
   @Put(':pageId/news/:newsId')
+  @SetMetadata('role', 'admin')
   @ApiOperation({ 
     summary: '학교 소식을 수정',
     description: `
@@ -201,6 +205,7 @@ export class NewsController {
   }
 
   @Delete(':pageId/news/:newsId')
+  @SetMetadata('role', 'admin')
   @ApiOperation({ 
     summary: '학교 소식을 삭제',
     description: `

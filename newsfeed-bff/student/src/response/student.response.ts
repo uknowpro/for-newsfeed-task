@@ -15,9 +15,9 @@ export class StudentResponse {
 
   @ApiProperty({ 
     description: `학생 정보 생성시각(ISOString)`,
-    example: '2021-08-01T10:00:00Z'
+    example: '2021-08-01T10:00:00.000Z'
   })
-  creationDate: string;
+  creationAt: string;
 
   @ApiProperty({ 
     description: `(Optional) 확장성을 위한 추가 데이터`,

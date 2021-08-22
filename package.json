@@ -9,13 +9,15 @@
     "bootstrap:prod": "lerna bootstrap -- --production --no-optional",
     "bootstrap:build": "lerna bootstrap --hoist -- --no-optional",
     "build": "lerna run build",
-    "start": "lerna run --scope app start --stream",
-    "start:debug": "lerna run --stream --scope app start:debug",
+    "start": "lerna run --scope @newsfeed/app start --stream",
+    "start:debug": "lerna run --stream --scope @newsfeed/app start:debug",
     "clean": "lerna run clean",
     "clean:deps": "lerna clean --yes",
     "fixversions": "syncpack fix-mismatches"
   },
   "dependencies": {
-    "@nestjs/axios": "0.0.1"
+    "@nestjs/axios": "0.0.1",
+    "@nestjs/mongoose": "^8.0.1",
+    "mongoose": "^5.13.7"
   }
 }
