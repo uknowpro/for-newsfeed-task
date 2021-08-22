@@ -21,6 +21,14 @@ import { PageSchema, NewsSchema, UserSchema } from '@newsfeed/common';
         },
       },
       {
+        name: 'News',
+        useFactory: () => {
+          const schema = NewsSchema;
+          // schema.pre('save', function() { console.log('Hello from pre save') });
+          return schema;
+        },
+      },
+      {
         name: 'User',
         useFactory: () => {
           const schema = UserSchema;
