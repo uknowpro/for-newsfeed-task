@@ -45,7 +45,6 @@
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
     "mongoose": "^5.13.7",
-    "@newsfeed/mongo": "^0.0.1",
     "@newsfeed/common": "^0.0.1",
     "@newsfeed/page": "^0.0.1",
     "@newsfeed/student": "^0.0.1"

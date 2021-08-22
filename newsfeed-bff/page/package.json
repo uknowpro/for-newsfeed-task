@@ -30,8 +30,7 @@
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
     "mongoose": "^5.13.7",
-    "@newsfeed/common": "^0.0.1",
-    "@newsfeed/mongo": "^0.0.1"
+    "@newsfeed/common": "^0.0.1"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",

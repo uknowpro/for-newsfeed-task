@@ -6,7 +6,6 @@ import { PageService } from './page.service';
 import { NewsController } from './news.controller';
 import { NewsService } from './news.service';
 import { REQUEST } from '@nestjs/core';
-import { MongoModule, MongoService } from '@newsfeed/mongo';
 import { MongooseModule } from '@nestjs/mongoose';
 import { PageSchema, NewsSchema, UserSchema } from '@newsfeed/common';
 
