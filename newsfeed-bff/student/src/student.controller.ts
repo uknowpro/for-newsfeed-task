@@ -38,15 +38,15 @@ export class StudentController {
   })
   @ApiBadRequestResponse({ 
     description: 'Bad request.', 
-    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' } } } 
+    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' }, errors: { type: 'array', example: [] } } }
   })
   @ApiForbiddenResponse({ 
     description: 'Forbidden.', 
-    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' } } } 
+    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' }, errors: { type: 'array', example: [] } } }
   })
   @ApiInternalServerErrorResponse({
     description: 'Internal error.', 
-    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' } } } 
+    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' }, errors: { type: 'array', example: [] } } }
   })
   @ApiResponse({
     status: 201,
@@ -79,15 +79,15 @@ export class StudentController {
   @ApiHeader({ name: 'Authorization', description: 'Bearer {token}' })
   @ApiBadRequestResponse({ 
     description: 'Bad request.', 
-    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' } } } 
+    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' }, errors: { type: 'array', example: [] } } }
   })
   @ApiForbiddenResponse({ 
     description: 'Forbidden.', 
-    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' } } } 
+    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' }, errors: { type: 'array', example: [] } } }
   })
   @ApiInternalServerErrorResponse({ 
     description: 'Internal error.', 
-    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' } } } 
+    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' }, errors: { type: 'array', example: [] } } }
   })
   @ApiResponse({
     status: 200,
@@ -122,15 +122,15 @@ export class StudentController {
   @ApiHeader({ name: 'Authorization', description: 'Bearer {token}' })
   @ApiBadRequestResponse({ 
     description: 'Bad request.', 
-    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' } } } 
+    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' }, errors: { type: 'array', example: [] } } }
   })
   @ApiForbiddenResponse({ 
     description: 'Forbidden.', 
-    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' } } } 
+    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' }, errors: { type: 'array', example: [] } } }
   })
   @ApiInternalServerErrorResponse({ 
     description: 'Internal error.', 
-    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' } } } 
+    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' }, errors: { type: 'array', example: [] } } }
   })
   @ApiOkResponse({ description: 'Ok.' })
   async updateOne(
@@ -158,15 +158,15 @@ export class StudentController {
   @ApiHeader({ name: 'Authorization', description: 'Bearer {token}' })
   @ApiBadRequestResponse({ 
     description: 'Bad request.', 
-    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' } } } 
+    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' }, errors: { type: 'array', example: [] } } }
   })
   @ApiForbiddenResponse({ 
     description: 'Forbidden.', 
-    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' } } } 
+    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' }, errors: { type: 'array', example: [] } } }
   })
   @ApiInternalServerErrorResponse({ 
     description: 'Internal error.', 
-    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' } } } 
+    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' }, errors: { type: 'array', example: [] } } }
   })
   @ApiOkResponse({ description: 'Ok.' })
   async patchOne(
@@ -193,15 +193,15 @@ export class StudentController {
   @ApiHeader({ name: 'Authorization', description: 'Bearer {token}' })
   @ApiBadRequestResponse({ 
     description: 'Bad request.', 
-    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' } } } 
+    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' }, errors: { type: 'array', example: [] } } }
   })
   @ApiForbiddenResponse({ 
     description: 'Forbidden.', 
-    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' } } } 
+    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' }, errors: { type: 'array', example: [] } } }
   })
   @ApiInternalServerErrorResponse({ 
     description: 'Internal error.', 
-    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' } } } 
+    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' }, errors: { type: 'array', example: [] } } }
   })
   @ApiOkResponse({ description: 'Ok.' })
   async deleteOne(
@@ -229,15 +229,15 @@ export class StudentController {
   @ApiHeader({ name: 'Authorization', description: 'Bearer {token}' })
   @ApiBadRequestResponse({ 
     description: 'Bad request.', 
-    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' } } } 
+    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' }, errors: { type: 'array', example: [] } } }
   })
   @ApiForbiddenResponse({ 
     description: 'Forbidden.', 
-    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' } } } 
+    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' }, errors: { type: 'array', example: [] } } }
   })
   @ApiInternalServerErrorResponse({ 
     description: 'Internal error.', 
-    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' } } } 
+    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' }, errors: { type: 'array', example: [] } } }
   })
   @ApiResponse({
     status: 200,
