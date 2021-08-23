@@ -61,7 +61,11 @@ export class PageController {
     @Headers('Authorization') authorization: string,
     @Body() body: CreatePageDto
   ): Promise<any> {
-    return await this.pageService.createOne(body);
+    try {
+      return await this.pageService.createOne(body);
+    } catch (err) {
+      throw new HttpException(err, err.status || HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   @Get('')
@@ -103,7 +107,11 @@ export class PageController {
     @Headers('Authorization') authorization: string, 
     @Query('subscriptorId') subscriptorId: string
   ): Promise<Result<PageResponse[]>> {
-    return await this.pageService.findAll(subscriptorId);
+    try {
+      return await this.pageService.findAll(subscriptorId);
+    } catch (err) {
+      throw new HttpException(err, err.status || HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   @Get(':pageId')
@@ -141,7 +149,11 @@ export class PageController {
     @Headers('Authorization') authorization: string, 
     @Param('pageId') pageId: string
   ): Promise<Result<PageResponse>> {
-    return await this.pageService.findOne(pageId);
+    try {
+      return await this.pageService.findOne(pageId);
+    } catch (err) {
+      throw new HttpException(err, err.status || HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   @Put(':pageId')
@@ -170,7 +182,11 @@ export class PageController {
     @Param('pageId') pageId: string,
     @Body() body: UpdatePageDto
   ): Promise<any> {
-    return await this.pageService.updateOne(pageId, body);
+    try {
+      return await this.pageService.updateOne(pageId, body);
+    } catch (err) {
+      throw new HttpException(err, err.status || HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   @Delete(':pageId')
@@ -198,6 +214,10 @@ export class PageController {
     @Headers('Authorization') authorization: string, 
     @Param('pageId') pageId: string
   ): Promise<any> {
-    return await this.pageService.deleteOne(pageId);
+    try {
+      return await this.pageService.deleteOne(pageId);
+    } catch (err) {
+      throw new HttpException(err, err.status || HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 }

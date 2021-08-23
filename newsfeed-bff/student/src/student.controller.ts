@@ -60,7 +60,11 @@ export class StudentController {
   async createOne(
     @Body() body: CreateStudentDto
   ): Promise<any> {
-    return await this.studentService.createOne(body);
+    try {
+      return await this.studentService.createOne(body);
+    } catch (err) {
+      throw new HttpException(err, err.status || HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   @Get(':studentId')
@@ -99,7 +103,11 @@ export class StudentController {
     @Headers('Authorization') authorization: string, 
     @Param('studentId') studentId: string
   ): Promise<Result<StudentResponse>> {
-    return await this.studentService.findOne(studentId);
+    try {
+      return await this.studentService.findOne(studentId);
+    } catch (err) {
+      throw new HttpException(err, err.status || HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   @Put(':studentId')
@@ -130,7 +138,11 @@ export class StudentController {
     @Param('studentId') studentId: string,
     @Body() body: UpdateStudentDto
   ): Promise<any> {
-    return await this.studentService.updateOne(studentId, body);
+    try {
+      return await this.studentService.updateOne(studentId, body);
+    } catch (err) {
+      throw new HttpException(err, err.status || HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   @Patch(':studentId')
@@ -162,7 +174,11 @@ export class StudentController {
     @Param('studentId') studentId: string,
     @Body() body: PatchStudentDto
   ): Promise<any> {
-    return await this.studentService.patchOne(studentId, body);
+    try {
+      return await this.studentService.patchOne(studentId, body);
+    } catch (err) {
+      throw new HttpException(err, err.status || HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   @Delete(':studentId')
@@ -192,7 +208,11 @@ export class StudentController {
     @Headers('Authorization') authorization: string, 
     @Param('studentId') studentId: string
   ): Promise<any> {
-    return await this.studentService.deleteOne(studentId);
+    try {
+      return await this.studentService.deleteOne(studentId);
+    } catch (err) {
+      throw new HttpException(err, err.status || HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   @Get(':studentId/subscription-news')
@@ -233,6 +253,10 @@ export class StudentController {
     @Headers('Authorization') authorization: string, 
     @Param('studentId') studentId: string
   ): Promise<Result<SubscriptionNewsResponse[]>> {
-    return await this.studentService.findSubscriptionNewsAll(studentId);
+    try {
+      return await this.studentService.findSubscriptionNewsAll(studentId);
+    } catch (err) {
+      throw new HttpException(err, err.status || HttpStatus.INTERNAL_SERVER_ERROR);
+    } 
   }
 }

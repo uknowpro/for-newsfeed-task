@@ -14,5 +14,6 @@ export * from './response/news.response';
 export * from './response/page.response';
 export * from './response/student.response';
 export * from './response/subscription-news.response';
+export * from './exception/exception-formatter';
 
 export default [auth, db, log]

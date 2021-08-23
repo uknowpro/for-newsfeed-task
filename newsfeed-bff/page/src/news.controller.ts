@@ -63,7 +63,11 @@ export class NewsController {
     @Param('pageId') pageId: string,
     @Body() body: CreateNewsDto
   ): Promise<any> {
-    return await this.newsService.createOne(pageId, body);
+    try {
+      return await this.newsService.createOne(pageId, body);
+    } catch (err) {
+      throw new HttpException(err, err.status || HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   @Get(':pageId/news')
@@ -103,7 +107,11 @@ export class NewsController {
     @Headers('Authorization') authorization: string, 
     @Param('pageId') pageId: string
   ): Promise<Result<NewsResponse[]>> {
-    return await this.newsService.findAll(pageId);
+    try {
+      return await this.newsService.findAll(pageId);
+    } catch (err) {
+      throw new HttpException(err, err.status || HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
   
   @Get(':pageId/news/:newsId')
@@ -142,7 +150,11 @@ export class NewsController {
     @Param('pageId') pageId: string, 
     @Param('newsId') newsId: string
   ): Promise<Result<NewsResponse>> {
-    return await this.newsService.findOne(pageId, newsId);
+    try {
+      return await this.newsService.findOne(pageId, newsId);
+    } catch (err) {
+      throw new HttpException(err, err.status || HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
   
   @Put(':pageId/news/:newsId')
@@ -173,7 +185,11 @@ export class NewsController {
     @Param('newsId') newsId: string,
     @Body() body: UpdateNewsDto
   ): Promise<Result<NewsResponse>> {
-    return await this.newsService.updateOne(pageId, newsId, body);
+    try {
+      return await this.newsService.updateOne(pageId, newsId, body);
+    } catch (err) {
+      throw new HttpException(err, err.status || HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   @Delete(':pageId/news/:newsId')
@@ -202,6 +218,10 @@ export class NewsController {
     @Headers('Authorization') authorization: string, 
     @Param('pageId') pageId: string, @Param('newsId') newsId: string
   ): Promise<Result> {
-    return await this.newsService.deleteOne(pageId, newsId);
+    try {
+      return await this.newsService.deleteOne(pageId, newsId);
+    } catch (err) {
+      throw new HttpException(err, err.status || HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 }

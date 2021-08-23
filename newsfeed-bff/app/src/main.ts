@@ -1,7 +1,7 @@
 import { NestFactory, Reflector } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
-import { RolesGuard } from '@newsfeed/common';
+import { RolesGuard, ExceptionFormatter } from '@newsfeed/common';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -10,6 +10,7 @@ async function bootstrap() {
   const reflector = app.get(Reflector);
 
   app.setGlobalPrefix('v1');
+  app.useGlobalFilters(new ExceptionFormatter());
   app.useGlobalGuards(new RolesGuard(reflector, configService));
 
   const config = new DocumentBuilder()
