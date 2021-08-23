@@ -32,6 +32,7 @@
     "mongoose": "^5.13.7",
     "bcrypt": "^5.0.1",
     "validator": "^11.1.0",
+    "uuid": "^3.4.0",
     "@newsfeed/common": "^0.0.1"
   },
   "devDependencies": {

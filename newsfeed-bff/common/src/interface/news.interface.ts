@@ -4,6 +4,6 @@ export interface News extends Document {
     id: string;
     title: string;
     content: string;
-    creationAt: Date;
+    createdAt: Date;
     extra?: object;
 }

@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class NewsResponse {
+export class SubscriptionNewsResponse {
   @ApiProperty({
     description: '소식 ID',
     example: '소식 ID'
@@ -23,7 +23,7 @@ export class NewsResponse {
     description: `소식 생성시각(ISOString)`,
     example: '2021-08-01T10:00:00Z'
   })
-  creationAt: string;
+  createdAt: string;
 
   @ApiProperty({ 
     description: `(Optional) 확장성을 위한 추가 데이터`,

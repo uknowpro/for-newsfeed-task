@@ -9,13 +9,13 @@ export const UserSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        minlength: 3,
-        maxlength: 1024,
+        minlength: 1,
+        maxlength: 16,
         required: [true, 'PASSWORD_IS_BLANK'],
     },
     name: {
         type: String,
-        minlength: 3,
+        minlength: 1,
         maxlength: 255,
         required: [true, 'NAME_IS_BLANK'],
     },

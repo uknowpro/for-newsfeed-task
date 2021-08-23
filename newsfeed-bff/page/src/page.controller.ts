@@ -10,14 +10,13 @@ import {
   ApiOkResponse, 
   ApiInternalServerErrorResponse, 
   ApiBadRequestResponse, 
-  ApiUnauthorizedResponse, 
+  ApiForbiddenResponse, 
   getSchemaPath 
 } from '@nestjs/swagger';
-import { Result } from '@newsfeed/common';
+import { Result, PageResponse } from '@newsfeed/common';
 import { PageService } from './page.service';
 import { CreatePageDto } from './dto/create-page.dto';
 import { UpdatePageDto } from './dto/update-page.dto';
-import { PageResponse } from './response/page.response';
 
 @ApiBearerAuth()
 @ApiTags('Page')
@@ -33,6 +32,7 @@ export class PageController {
     summary: '학교 페이지를 생성',
     description: `
       * 학교 관리자만 학교 페이지를 생성할 수 있습니다.
+      * 학교 페이지명은 중복될 수 없습니다.
     `
   })
   @ApiHeader({ name: 'Authorization', description: 'Bearer {token}' })
@@ -40,7 +40,7 @@ export class PageController {
     description: 'Bad request.', 
     schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' } } } 
   })
-  @ApiUnauthorizedResponse({ 
+  @ApiForbiddenResponse({ 
     description: 'Forbidden.', 
     schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' } } } 
   })
@@ -50,7 +50,6 @@ export class PageController {
   })
   @ApiResponse({
     status: 201,
-    description: 'Created.',
     schema: {
       type: 'object', properties: {
         data: { type: 'array', items: { type: 'object', $ref: getSchemaPath(PageResponse) } },
@@ -72,6 +71,7 @@ export class PageController {
     description: `
       * 학교 관리자 또는 학생만 학교 페이지들을 조회할 수 있습니다.
       * 구독자(학생) ID를 사용하면, 구독중인 학교 페이지들을 조회할 수 있습니다.
+      * 가장 최근의 생성된 페이지순으로 정렬됩니다.
       * 현재, 페이징이 고려되어 있지 않으며, 페이징 적용시 추가 데이터는 extraData에 반영합니다.
     `
   })
@@ -80,7 +80,7 @@ export class PageController {
     description: 'Bad request.', 
     schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' } } } 
   })
-  @ApiUnauthorizedResponse({ 
+  @ApiForbiddenResponse({ 
     description: 'Forbidden.', 
     schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' } } } 
   })
@@ -119,7 +119,7 @@ export class PageController {
     description: 'Bad request.', 
     schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' } } } 
   })
-  @ApiUnauthorizedResponse({ 
+  @ApiForbiddenResponse({ 
     description: 'Forbidden.', 
     schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' } } } 
   })
@@ -157,7 +157,7 @@ export class PageController {
     description: 'Bad request.', 
     schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' } } } 
   })
-  @ApiUnauthorizedResponse({ 
+  @ApiForbiddenResponse({ 
     description: 'Forbidden.', 
     schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' } } } 
   })
@@ -186,7 +186,7 @@ export class PageController {
     description: 'Bad request.', 
     schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' } } } 
   })
-  @ApiUnauthorizedResponse({ 
+  @ApiForbiddenResponse({ 
     description: 'Forbidden.', 
     schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' } } } 
   })
@@ -194,10 +194,10 @@ export class PageController {
     description: 'Internal error.', 
     schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' } } } 
   })
-  async removeOne(
+  async deleteOne(
     @Headers('Authorization') authorization: string, 
     @Param('pageId') pageId: string
   ): Promise<any> {
-    return await this.pageService.removeOne(pageId);
+    return await this.pageService.deleteOne(pageId);
   }
 }

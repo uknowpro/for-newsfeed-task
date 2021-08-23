@@ -11,13 +11,13 @@ export const NewsSchema = new mongoose.Schema({
     },
     title: {
         type: String,
-        minlength: 3,
+        minlength: 1,
         maxlength: 255,
         required: [true, 'TITLE_IS_BLANK'],
     },
     content: {
         type: String,
-        minlength: 3,
+        minlength: 1,
         maxlength: 4096,
         required: [true, 'CONTENT_IS_BLANK'],
     },

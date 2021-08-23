@@ -9,14 +9,13 @@ import {
   ApiOkResponse, 
   ApiInternalServerErrorResponse, 
   ApiBadRequestResponse, 
-  ApiUnauthorizedResponse,
+  ApiForbiddenResponse,
   getSchemaPath 
 } from '@nestjs/swagger';
-import { Result } from '@newsfeed/common';
+import { Result, NewsResponse } from '@newsfeed/common';
 import { NewsService } from './news.service';
 import { CreateNewsDto } from './dto/create-news.dto';
 import { UpdateNewsDto } from './dto/update-news.dto';
-import { NewsResponse } from './response/news.response';
 
 @ApiBearerAuth()
 @ApiTags('News')
@@ -33,6 +32,7 @@ export class NewsController {
       summary: '학교 소식을 생성',
       description: `
         * 학교 관리자만 학교 소식을 생성할 수 있습니다.
+        * 학교 소식 제목은 중복될 수 없습니다.
       `
     }
   )
@@ -41,7 +41,7 @@ export class NewsController {
     description: 'Bad request.', 
     schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' } } } 
   })
-  @ApiUnauthorizedResponse({ 
+  @ApiForbiddenResponse({ 
     description: 'Forbidden.', 
     schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' } } } 
   })
@@ -51,7 +51,6 @@ export class NewsController {
   })
   @ApiResponse({
     status: 201,
-    description: 'Created.',
     schema: {
       type: 'object', properties: {
         data: { type: 'array', items: { type: 'object', $ref: getSchemaPath(NewsResponse) } },
@@ -64,14 +63,7 @@ export class NewsController {
     @Param('pageId') pageId: string,
     @Body() body: CreateNewsDto
   ): Promise<any> {
-    // try {
-    //   return await this.newsService.remove(id);
-    // } catch (err) {
-    //   if (err instanceof NotFoundException) {
-    //     throw new HttpException(err, HttpStatus.BAD_REQUEST);
-    //   }
-    //   throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
-    // }
+    return await this.newsService.createOne(pageId, body);
   }
 
   @Get(':pageId/news')
@@ -80,6 +72,7 @@ export class NewsController {
     summary: '학교 소식들을 조회',
     description: `
       * 학교 관리자만 학교 소식들을 조회할 수 있습니다.
+      * 가장 최근에 생성된 소식부터 정렬됩니다.
       * 현재, 페이징이 고려되어 있지 않으며, 페이징 적용시 추가 데이터는 extraData에 반영합니다.
     `
   })
@@ -88,7 +81,7 @@ export class NewsController {
     description: 'Bad request.', 
     schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' } } } 
   })
-  @ApiUnauthorizedResponse({ 
+  @ApiForbiddenResponse({ 
     description: 'Forbidden.', 
     schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' } } } 
   })
@@ -110,14 +103,7 @@ export class NewsController {
     @Headers('Authorization') authorization: string, 
     @Param('pageId') pageId: string
   ): Promise<Result<NewsResponse[]>> {
-    // try {
-    //   return await this.newsService.remove(id);
-    // } catch (err) {
-    //   if (err instanceof NotFoundException) {
-    //     throw new HttpException(err, HttpStatus.BAD_REQUEST);
-    //   }
-    //   throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
-    // }
+    return await this.newsService.findAll(pageId);
   }
   
   @Get(':pageId/news/:newsId')
@@ -133,7 +119,7 @@ export class NewsController {
     description: 'Bad request.', 
     schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' } } } 
   })
-  @ApiUnauthorizedResponse({ 
+  @ApiForbiddenResponse({ 
     description: 'Forbidden.', 
     schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' } } } 
   })
@@ -156,14 +142,7 @@ export class NewsController {
     @Param('pageId') pageId: string, 
     @Param('newsId') newsId: string
   ): Promise<Result<NewsResponse>> {
-    // try {
-    //   return await this.newsService.remove(id);
-    // } catch (err) {
-    //   if (err instanceof NotFoundException) {
-    //     throw new HttpException(err, HttpStatus.BAD_REQUEST);
-    //   }
-    //   throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
-    // }
+    return await this.newsService.findOne(pageId, newsId);
   }
   
   @Put(':pageId/news/:newsId')
@@ -179,7 +158,7 @@ export class NewsController {
     description: 'Bad request.', 
     schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' } } } 
   })
-  @ApiUnauthorizedResponse({ 
+  @ApiForbiddenResponse({ 
     description: 'Forbidden.', 
     schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' } } } 
   })
@@ -194,14 +173,7 @@ export class NewsController {
     @Param('newsId') newsId: string,
     @Body() body: UpdateNewsDto
   ): Promise<Result<NewsResponse>> {
-    // try {
-    //   return await this.newsService.remove(id);
-    // } catch (err) {
-    //   if (err instanceof NotFoundException) {
-    //     throw new HttpException(err, HttpStatus.BAD_REQUEST);
-    //   }
-    //   throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
-    // }
+    return await this.newsService.updateOne(pageId, newsId, body);
   }
 
   @Delete(':pageId/news/:newsId')
@@ -217,7 +189,7 @@ export class NewsController {
     description: 'Bad request.', 
     schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' } } } 
   })
-  @ApiUnauthorizedResponse({ 
+  @ApiForbiddenResponse({ 
     description: 'Forbidden.', 
     schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' } } } 
   })
@@ -226,17 +198,10 @@ export class NewsController {
     schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' } } } 
   })
   @ApiOkResponse({ description: 'Ok.' })
-  async removeOne(
+  async deleteOne(
     @Headers('Authorization') authorization: string, 
     @Param('pageId') pageId: string, @Param('newsId') newsId: string
   ): Promise<Result> {
-    // try {
-    //   return await this.newsService.remove(id);
-    // } catch (err) {
-    //   if (err instanceof NotFoundException) {
-    //     throw new HttpException(err, HttpStatus.BAD_REQUEST);
-    //   }
-    //   throw new HttpException(err, HttpStatus.INTERNAL_SERVER_ERROR);
-    // }
+    return await this.newsService.deleteOne(pageId, newsId);
   }
 }

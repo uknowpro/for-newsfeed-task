@@ -4,6 +4,6 @@ export interface Page extends Document {
     id: string;
     name: string;
     description: string;
-    creationAt: Date;
+    createdAt: Date;
     extra?: object;
 }

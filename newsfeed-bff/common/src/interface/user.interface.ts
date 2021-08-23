@@ -6,6 +6,6 @@ export interface User extends Document {
     name: string;
     roles?: [string];
     subscriptionPages?: [string];
-    creationAt: Date;
+    createdAt: Date;
     extra?: object;
 }
