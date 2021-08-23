@@ -14,9 +14,9 @@ export class NewsService {
   ) {}
 
   async createOne(pageId: string, createNewsDto: CreateNewsDto): Promise<Result<NewsResponse[]>> {
-    const page = this.pageModel.findOne({pageId});
+    const page = this.pageModel.findOne({id: pageId});
     if (!page) {
-      throw new NotFoundException('No page found.');
+      throw new BadRequestException('No page exist.');
     }
     await this.isNewsTitleUnique(createNewsDto.title);
     const newsDocument = this.buildNewsDocument(pageId, createNewsDto);
@@ -30,9 +30,9 @@ export class NewsService {
   }
 
   async findAll(pageId: string): Promise<Result<NewsResponse[]>> {
-    const page = this.pageModel.findOne({pageId});
+    const page = this.pageModel.findOne({id: pageId});
     if (!page) {
-      throw new NotFoundException('No page found.');
+      throw new BadRequestException('No page exist.');
     }
 
     const newsResults = await this.newsModel.find({pageId: {$eq: pageId}}).sort({'createdAt': -1});
@@ -41,9 +41,13 @@ export class NewsService {
   }
 
   async findOne(pageId: string, newsId: string): Promise<Result<NewsResponse[]>> {
+    const page = this.pageModel.findOne({id: pageId});
+    if (!page) {
+      throw new BadRequestException('No page exist.');
+    }
     const news = await this.newsModel.findOne({pageId, id: newsId});
     if (!news) {
-      throw new NotFoundException('No news found.');
+      throw new BadRequestException('No news exist.');
     }
     return Result.of([this.buildNewsInfo(news)]);
   }
@@ -51,7 +55,7 @@ export class NewsService {
   async updateOne(pageId: string, newsId: string, updateNewsDto: UpdateNewsDto): Promise<any> {
     const news = await this.newsModel.findOne({pageId, id: newsId});
     if (!news) {
-      throw new NotFoundException('No news found.');
+      throw new BadRequestException('No news exist.');
     }
     await this.newsModel.updateOne({id: newsId}, updateNewsDto);
     return;
@@ -60,7 +64,7 @@ export class NewsService {
   async deleteOne(pageId: string, newsId: string): Promise<any> {
     const news = await this.newsModel.findOne({pageId, id: newsId});
     if (!news) {
-      throw new NotFoundException('No news found.');
+      throw new BadRequestException('No news exist.');
     }
     await this.newsModel.deleteOne({pageId, id: newsId});
     return;

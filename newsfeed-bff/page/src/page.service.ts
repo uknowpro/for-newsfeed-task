@@ -26,7 +26,7 @@ export class PageService {
     if (subscriptorId) {
       const subscriptor = await this.userModel.findOne({id: subscriptorId});
       if (!subscriptor) {
-        throw new NotFoundException('No subscriptor found.');
+        throw new BadRequestException('No subscriptor exist.');
       }
       const subscriptionPages = subscriptor.subscriptionPages.map(async pageId => {
         return {id: pageId};
@@ -42,7 +42,7 @@ export class PageService {
   async findOne(pageId: string): Promise<Result<PageResponse[]>> {
     const page = await this.pageModel.findOne({id: pageId});
     if (!page) {
-      throw new NotFoundException('No page found.');
+      throw new BadRequestException('No page found.');
     }
     return Result.of([this.buildPageInfo(page)]);
   }
@@ -50,7 +50,7 @@ export class PageService {
   async updateOne(pageId: string, updatePageDto: UpdatePageDto): Promise<any> {
     const page = await this.pageModel.findOne({id: pageId});
     if (!page) {
-      throw new NotFoundException('No page found.');
+      throw new BadRequestException('No page found.');
     }
     await this.pageModel.updateOne({id: pageId}, updatePageDto);
     return;
@@ -59,7 +59,7 @@ export class PageService {
   async deleteOne(id: string): Promise<any> {
     const page = await this.pageModel.findOne({id});
     if (!page) {
-      throw new NotFoundException('No page found.');
+      throw new BadRequestException('No page found.');
     }
     await this.pageModel.deleteOne({id});
     return;

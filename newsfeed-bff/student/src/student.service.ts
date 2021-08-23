@@ -23,7 +23,7 @@ export class StudentService {
   async findOne(studentId: string): Promise<Result<UserResponse[]>> {
     const user = await this.userModel.findOne({id: studentId});
     if (!user) {
-      throw new NotFoundException('No student found.');
+      throw new BadRequestException('No student exist.');
     }
     return Result.of([this.buildStudentInfo(user)]);
   }
@@ -31,7 +31,7 @@ export class StudentService {
   async updateOne(studentId: string, updateStudentDto: UpdateStudentDto): Promise<any> {
     const user = await this.userModel.findOne({id: studentId});
     if (!user) {
-      throw new NotFoundException('No student found.');
+      throw new BadRequestException('No student exist.');
     }
     await this.userModel.updateOne({id: studentId}, updateStudentDto);
     return;
@@ -52,7 +52,7 @@ export class StudentService {
     }
     const user = await this.userModel.findOne({id: studentId});
     if (!user) {
-      throw new NotFoundException('No student found.');
+      throw new BadRequestException('No student exist.');
     }
     await this.userModel.updateOne({id: studentId}, patchDocument);
     return;
@@ -61,7 +61,7 @@ export class StudentService {
   async deleteOne(studentId: string): Promise<any> {
     const user = await this.userModel.findOne({id: studentId});
     if (!user) {
-      throw new NotFoundException('No student found.');
+      throw new BadRequestException('No student exist.');
     }
     await this.userModel.deleteOne({id: studentId});
     return;
@@ -70,7 +70,7 @@ export class StudentService {
   async findSubscriptionNewsAll(studentId: string): Promise<Result<NewsResponse[]>> {
     const student = await this.userModel.findOne({id: studentId});
     if (!student) {
-      throw new NotFoundException('No student found.');
+      throw new BadRequestException('No student exist.');
     }
     const subscriptionPages = student.subscriptionPages.map(async pageId => {
       return {pageId: pageId};
