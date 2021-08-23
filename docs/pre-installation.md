@@ -27,9 +27,9 @@ $ lerna create service
 
 ### 구동
 ```
-$ sudo npm run install
-$ sudo npm run bootstrap
-$ sudo npm run build
+$ npm install
+$ npm run bootstrap
+$ npm run build
 $ pm2 start --name newsfeed-bff  npm -- start
 ```
 
