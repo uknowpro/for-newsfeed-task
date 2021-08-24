@@ -12,7 +12,7 @@ import {
   ApiForbiddenResponse,
   getSchemaPath 
 } from '@nestjs/swagger';
-import { Result, NewsResponse } from '@newsfeed/common';
+import { Result, NewsResponse, ErrorResponse, errorResponseConst, errorMessageConst } from '@newsfeed/common';
 import { NewsService } from './news.service';
 import { CreateNewsDto } from './dto/create-news.dto';
 import { UpdateNewsDto } from './dto/update-news.dto';
@@ -20,7 +20,7 @@ import { UpdateNewsDto } from './dto/update-news.dto';
 @ApiBearerAuth()
 @ApiTags('News')
 @Controller('pages')
-@ApiExtraModels(NewsResponse)
+@ApiExtraModels(NewsResponse, ErrorResponse)
 export class NewsController {
   constructor(private readonly newsService: NewsService) {
   }
@@ -38,21 +38,23 @@ export class NewsController {
   )
   @ApiHeader({ name: 'Authorization', description: 'Bearer {token}' })
   @ApiBadRequestResponse({ 
-    description: 'Bad request.', 
-    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' }, errors: { type: 'array', example: [] } } } 
+    description: errorMessageConst.BadRequest, 
+    schema: { type: 'object', properties: errorResponseConst } 
   })
   @ApiForbiddenResponse({ 
-    description: 'Forbidden.', 
-    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' }, errors: { type: 'array', example: [] } } }
+    description: errorMessageConst.Forbidden, 
+    schema: { type: 'object', properties: errorResponseConst }
   })
   @ApiInternalServerErrorResponse({ 
-    description: 'Internal error.', 
-    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' }, errors: { type: 'array', example: [] } } } 
+    description: errorMessageConst.InternalServerError, 
+    schema: { type: 'object', properties: errorResponseConst } 
   })
   @ApiResponse({
     status: 201,
     schema: {
-      type: 'object', properties: {
+      type: 'object',
+      required: ['data', 'extraData'],
+      properties: {
         data: { type: 'array', items: { type: 'object', $ref: getSchemaPath(NewsResponse) } },
         extraData: { type: 'object' }
       },
@@ -82,22 +84,24 @@ export class NewsController {
   })
   @ApiHeader({ name: 'Authorization', description: 'Bearer {token}' })
   @ApiBadRequestResponse({ 
-    description: 'Bad request.', 
-    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' }, errors: { type: 'array', example: [] } } } 
+    description: errorMessageConst.BadRequest, 
+    schema: { type: 'object', properties: errorResponseConst } 
   })
   @ApiForbiddenResponse({ 
-    description: 'Forbidden.', 
-    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' }, errors: { type: 'array', example: [] } } } 
+    description: errorMessageConst.Forbidden, 
+    schema: { type: 'object', properties: errorResponseConst }
   })
   @ApiInternalServerErrorResponse({ 
-    description: 'Internal error.', 
-    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' }, errors: { type: 'array', example: [] } } } 
+    description: errorMessageConst.InternalServerError, 
+    schema: { type: 'object', properties: errorResponseConst } 
   })
   @ApiResponse({
     status: 200,
     description: 'The found record',
     schema: {
-      type: 'object', properties: {
+      type: 'object',
+      required: ['data', 'extraData'],
+      properties: {
         data: { type: 'array', items: { type: 'object', $ref: getSchemaPath(NewsResponse) } },
         extraData: { type: 'object' }
       },
@@ -124,22 +128,24 @@ export class NewsController {
   })
   @ApiHeader({ name: 'Authorization', description: 'Bearer {token}' })
   @ApiBadRequestResponse({ 
-    description: 'Bad request.', 
-    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' }, errors: { type: 'array', example: [] } } } 
+    description: errorMessageConst.BadRequest, 
+    schema: { type: 'object', properties: errorResponseConst } 
   })
   @ApiForbiddenResponse({ 
-    description: 'Forbidden.', 
-    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' }, errors: { type: 'array', example: [] } } } 
+    description: errorMessageConst.Forbidden, 
+    schema: { type: 'object', properties: errorResponseConst }
   })
   @ApiInternalServerErrorResponse({ 
-    description: 'Internal error.', 
-    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' }, errors: { type: 'array', example: [] } } } 
+    description: errorMessageConst.InternalServerError, 
+    schema: { type: 'object', properties: errorResponseConst } 
   })
   @ApiResponse({
     status: 200,
     description: 'The found record',
     schema: {
-      type: 'object', properties: {
+      type: 'object',
+      required: ['data', 'extraData'],
+      properties: {
         data: { type: 'array', items: { type: 'object', $ref: getSchemaPath(NewsResponse) } },
         extraData: { type: 'object' }
       },
@@ -167,16 +173,16 @@ export class NewsController {
   })
   @ApiHeader({ name: 'Authorization', description: 'Bearer {token}' })
   @ApiBadRequestResponse({ 
-    description: 'Bad request.', 
-    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' }, errors: { type: 'array', example: [] } } } 
+    description: errorMessageConst.BadRequest, 
+    schema: { type: 'object', properties: errorResponseConst } 
   })
   @ApiForbiddenResponse({ 
-    description: 'Forbidden.', 
-    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' }, errors: { type: 'array', example: [] } } } 
+    description: errorMessageConst.Forbidden, 
+    schema: { type: 'object', properties: errorResponseConst }
   })
   @ApiInternalServerErrorResponse({ 
-    description: 'Internal error.', 
-    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' }, errors: { type: 'array', example: [] } } } 
+    description: errorMessageConst.InternalServerError, 
+    schema: { type: 'object', properties: errorResponseConst } 
   })
   @ApiOkResponse({ description: 'Ok.' })
   async updateOne(
@@ -202,16 +208,16 @@ export class NewsController {
   })
   @ApiHeader({ name: 'Authorization', description: 'Bearer {token}' })
   @ApiBadRequestResponse({ 
-    description: 'Bad request.', 
-    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' }, errors: { type: 'array', example: [] } } } 
+    description: errorMessageConst.BadRequest, 
+    schema: { type: 'object', properties: errorResponseConst } 
   })
   @ApiForbiddenResponse({ 
-    description: 'Forbidden.', 
-    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' }, errors: { type: 'array', example: [] } } } 
+    description: errorMessageConst.Forbidden, 
+    schema: { type: 'object', properties: errorResponseConst }
   })
   @ApiInternalServerErrorResponse({ 
-    description: 'Internal error.', 
-    schema: { type: 'object', properties: { errorType: { type: 'string' }, errorMessage: { type: 'string' }, errors: { type: 'array', example: [] } } } 
+    description: errorMessageConst.InternalServerError, 
+    schema: { type: 'object', properties: errorResponseConst } 
   })
   @ApiOkResponse({ description: 'Ok.' })
   async deleteOne(

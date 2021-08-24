@@ -12,8 +12,14 @@ export * from './interface/page.interface';
 export * from './interface/user.interface';
 export * from './response/news.response';
 export * from './response/page.response';
+export * from './response/error.response';
 export * from './response/student.response';
 export * from './response/subscription-news.response';
 export * from './exception/exception-formatter';
+export { 
+    errorResponseConst,
+    exceptionConst,
+    errorMessageConst 
+} from './constants';
 
 export default [auth, db, log]
