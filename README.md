@@ -40,7 +40,83 @@ $ makefile -f Makefile-local.mk infra
 
 ### newsfeed BFF 설치 및 실행
 ```
-$ makefile -f Makefile-local.mk servicce
+$ makefile -f Makefile-local.mk service
+```
+```
+> root@ bootstrap /home/yunho0520/for-newsfeed-task
+> lerna bootstrap --hoist -- --no-optional
+
+lerna notice cli v4.0.0
+lerna info Bootstrapping 4 packages
+lerna WARN EHOIST_ROOT_VERSION The repository root depends on @nestjs/axios@0.0.1, which differs from the more common @nestjs/axios@^0.0.1.
+lerna WARN EHOIST_PKG_VERSION "@newsfeed/app" package depends on @nestjs/axios@^0.0.1, which differs from the hoisted @nestjs/axios@0.0.1.
+lerna WARN EHOIST_PKG_VERSION "@newsfeed/common" package depends on @nestjs/axios@^0.0.1, which differs from the hoisted @nestjs/axios@0.0.1.
+lerna WARN EHOIST_PKG_VERSION "@newsfeed/page" package depends on @nestjs/axios@^0.0.1, which differs from the hoisted @nestjs/axios@0.0.1.
+lerna WARN EHOIST_PKG_VERSION "@newsfeed/student" package depends on @nestjs/axios@^0.0.1, which differs from the hoisted @nestjs/axios@0.0.1.
+lerna WARN EHOIST_ROOT_VERSION The repository root depends on uuid@^8.3.2, which differs from the more common uuid@^3.4.0.
+lerna WARN EHOIST_PKG_VERSION "@newsfeed/page" package depends on uuid@^3.4.0, which differs from the hoisted uuid@^8.3.2.
+lerna WARN EHOIST_PKG_VERSION "@newsfeed/student" package depends on uuid@^3.4.0, which differs from the hoisted uuid@^8.3.2.
+lerna info Installing external dependencies
+lerna info hoist Installing hoisted dependencies into root
+lerna info hoist Pruning hoisted dependencies
+lerna info hoist Finished pruning hoisted dependencies
+lerna info hoist Finished bootstrapping root
+lerna info Symlinking packages and binaries
+lerna success Bootstrapped 4 packages
+
+> root@ build /home/yunho0520/for-newsfeed-task
+> lerna run build
+
+lerna notice cli v4.0.0
+lerna info Executing command in 4 packages: "npm run build"
+lerna info run Ran npm script 'build' in '@newsfeed/common' in 10.4s:
+
+> @newsfeed/common@0.0.1 prebuild /home/yunho0520/for-newsfeed-task/newsfeed-bff/common
+> rimraf dist
+
+
+> @newsfeed/common@0.0.1 build /home/yunho0520/for-newsfeed-task/newsfeed-bff/common
+> nest build
+
+lerna info run Ran npm script 'build' in '@newsfeed/student' in 14.1s:
+
+> @newsfeed/student@0.0.1 prebuild /home/yunho0520/for-newsfeed-task/newsfeed-bff/student
+> rimraf dist
+
+
+> @newsfeed/student@0.0.1 build /home/yunho0520/for-newsfeed-task/newsfeed-bff/student
+> nest build
+
+lerna info run Ran npm script 'build' in '@newsfeed/page' in 14.5s:
+
+> @newsfeed/page@0.0.1 prebuild /home/yunho0520/for-newsfeed-task/newsfeed-bff/page
+> rimraf dist
+
+
+> @newsfeed/page@0.0.1 build /home/yunho0520/for-newsfeed-task/newsfeed-bff/page
+> nest build
+
+lerna info run Ran npm script 'build' in '@newsfeed/app' in 10.0s:
+
+> @newsfeed/app@0.0.0 prebuild /home/yunho0520/for-newsfeed-task/newsfeed-bff/app
+> rimraf dist
+
+
+> @newsfeed/app@0.0.0 build /home/yunho0520/for-newsfeed-task/newsfeed-bff/app
+> nest build
+
+lerna success run Ran npm script 'build' in 4 packages in 34.8s:
+lerna success - @newsfeed/app
+lerna success - @newsfeed/common
+lerna success - @newsfeed/page
+lerna success - @newsfeed/student
+[PM2] Starting /usr/bin/npm in fork_mode (1 instance)
+[PM2] Done.
+┌─────┬─────────────────┬─────────────┬─────────┬─────────┬──────────┬────────┬──────┬───────────┬──────────┬──────────┬──────────┬──────────┐
+│ id  │ name            │ namespace   │ version │ mode    │ pid      │ uptime │ ↺    │ status    │ cpu      │ mem      │ user     │ watching │
+├─────┼─────────────────┼─────────────┼─────────┼─────────┼──────────┼────────┼──────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+│ 0   │ newsfeed-bff    │ default     │ N/A     │ fork    │ 9267     │ 0s     │ 0    │ online    │ 0%       │ 16.0mb   │ yun… │ disabled │
+└─────┴─────────────────┴─────────────┴─────────┴─────────┴──────────┴────────┴──────┴───────────┴──────────┴──────────┴──────────┴──────────┘
 ```
 
 ## 테스트 실행
