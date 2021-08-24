@@ -17,7 +17,13 @@ infra-down:
 infra-clean:
 	@docker-compose -f ${INFRA_DOCKER_COMPOSE_FILE} down --remove-orphans --rmi all 2>/dev/null
 
-service-up: network
+service-install:
+	@npm install
+
+service-build:
+	@npm run bootstrap && npm run build
+
+service-up: service-build
 	@pm2 start --name newsfeed-bff  npm -- start
 
 service-down:
@@ -29,5 +35,3 @@ integrated-test: clean infra service
 	@cd test && make -f Makefile-for-intgrated-test.mk test && cd -
 
 .PHONY: clean network network-clean infra infra-down infra-clean service-up service-down integrated-test
-
-
