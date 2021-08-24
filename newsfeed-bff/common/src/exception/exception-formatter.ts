@@ -1,6 +1,6 @@
 import { ExceptionFilter, Catch, ArgumentsHost, HttpException } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { statusExceptionConst } from '../constants';
+import { toExceptionConst, errorMessageConst } from '../constants';
 
 @Catch(HttpException)
 export class ExceptionFormatter implements ExceptionFilter<HttpException> {
@@ -17,9 +17,9 @@ export class ExceptionFormatter implements ExceptionFilter<HttpException> {
     response
       .status(status)
       .json({
-        errorType: statusExceptionConst[status] || 'UnknownException',
+        errorType: toExceptionConst(status),
         errorMessage: errorResponse.message || 'Internal server error.',
-        errors: errorResponse.customErrors || []
+        errors: errorResponse.customErrors || errorMessageConst.Unexpected
       })
   }
 }

@@ -34,3 +34,13 @@ export const apiHeaderConst = {
     example: 'Bearer {token}', 
     schema: { type: 'string', default: 'Bearer {token}' } 
 }
+
+export function toExceptionConst(e: number): string {
+    switch (e) {
+        case 400: return statusExceptionConst[e];
+        case 403: return statusExceptionConst[e];
+        case 404: return statusExceptionConst[e];
+        case 500: return statusExceptionConst[e];
+        default: return statusExceptionConst[1000];
+    }
+}
