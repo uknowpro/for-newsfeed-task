@@ -33,6 +33,7 @@
     "bcrypt": "^5.0.1",
     "validator": "^11.1.0",
     "uuid": "^3.4.0",
+    "class-validator": "^0.13.1",
     "@newsfeed/common": "^0.0.1"
   },
   "devDependencies": {

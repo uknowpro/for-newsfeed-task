@@ -12,6 +12,14 @@ export const exceptionConst = {
     InternalServerErrorException: 'InternalServerErrorException'
 }
 
+export const statusExceptionConst = {
+    1000: 'UnexpectedException',
+    404: 'NotFoundException',
+    400: 'BadRequestException',
+    403: 'ForbiddenException',
+    500: 'InternalServerErrorException'
+}
+
 export const errorMessageConst = {
     BadRequest: 'Bad request.',
     NotFound: 'Not found.',

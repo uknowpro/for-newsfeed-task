@@ -3,6 +3,7 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
 import { RolesGuard, ExceptionFormatter } from '@newsfeed/common';
 import { AppModule } from './app.module';
+import { ValidationPipe } from './validation.pipe';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -10,6 +11,7 @@ async function bootstrap() {
   const reflector = app.get(Reflector);
 
   app.setGlobalPrefix('v1');
+  app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new ExceptionFormatter());
   app.useGlobalGuards(new RolesGuard(reflector, configService));
 

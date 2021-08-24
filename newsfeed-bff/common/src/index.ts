@@ -20,7 +20,8 @@ export {
     errorResponseConst,
     exceptionConst,
     errorMessageConst,
-    apiHeaderConst
+    apiHeaderConst,
+    statusExceptionConst,
 } from './constants';
 
 export default [auth, db, log]

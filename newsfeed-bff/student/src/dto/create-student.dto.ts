@@ -1,22 +1,29 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsString, IsNotEmpty, IsObject, IsArray } from 'class-validator';
 
 export class CreateStudentDto {
   @ApiProperty({
     description: '학생 ID',
     example: '학생 ID'
   })
+  @IsString()
+  @IsNotEmpty()
   studentId: string;
 
   @ApiProperty({
     description: '패스워드',
     example: '패스워드'
   })
+  @IsString()
+  @IsNotEmpty()
   password: string;
 
   @ApiProperty({
     description: '학생 명',
     example: '학생 명'
   })
+  @IsString()
+  @IsNotEmpty()
   name: string;
 
   @ApiProperty({
@@ -24,6 +31,7 @@ export class CreateStudentDto {
     default: [],
     example: ['1', '2']
   })
+  @IsArray()
   subscriptionPages?: [];
 
   @ApiProperty({ 
@@ -31,5 +39,6 @@ export class CreateStudentDto {
     default: {},
     example: {}
   })
+  @IsObject()
   extra?: {};
 }
