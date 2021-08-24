@@ -1,7 +1,7 @@
 import { Injectable, Inject, NotFoundException, BadRequestException, InternalServerErrorException } from '@nestjs/common';
 import { CreatePageDto } from './dto/create-page.dto';
 import { UpdatePageDto } from './dto/update-page.dto';
-import { Result, Page, User, PageResponse } from '@newsfeed/common';
+import { Result, Page, News, User, PageResponse } from '@newsfeed/common';
 import { Model } from 'mongoose';
 import { v4 as uuidv4 } from 'uuid';
 import { InjectModel } from '@nestjs/mongoose';
@@ -11,6 +11,7 @@ export class PageService {
   constructor(
     @InjectModel('User') private readonly userModel: Model<User>,
     @InjectModel('Page') private readonly pageModel: Model<Page>,
+    @InjectModel('News') private readonly newsModel: Model<News>,
   ) {}
 
   async createOne(createPageDto: CreatePageDto): Promise<Result<PageResponse[]>> {
@@ -56,12 +57,13 @@ export class PageService {
     return;
   }
 
-  async deleteOne(id: string): Promise<any> {
-    const page = await this.pageModel.findOne({id});
+  async deleteOne(pageId: string): Promise<any> {
+    const page = await this.pageModel.findOne({id: pageId});
     if (!page) {
       throw new BadRequestException('No page found.');
     }
-    await this.pageModel.deleteOne({id});
+    await this.pageModel.deleteOne({id: pageId});
+    await this.newsModel.deleteMany({pageId});
     return;
   }
 
