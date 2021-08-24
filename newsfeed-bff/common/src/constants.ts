@@ -19,3 +19,10 @@ export const errorMessageConst = {
     Forbidden: 'Forbidden.',
     Unexpected: 'Unexpected exception arise.'
 }
+
+export const apiHeaderConst = { 
+    name: 'Authorization', 
+    description: '우측 자물쇠 버튼으로 토큰을 설정해주세요.', 
+    example: 'Bearer {token}', 
+    schema: { type: 'string', default: 'Bearer {token}' } 
+}

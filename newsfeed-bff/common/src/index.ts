@@ -19,7 +19,8 @@ export * from './exception/exception-formatter';
 export { 
     errorResponseConst,
     exceptionConst,
-    errorMessageConst 
+    errorMessageConst,
+    apiHeaderConst
 } from './constants';
 
 export default [auth, db, log]

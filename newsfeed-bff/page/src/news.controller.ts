@@ -12,10 +12,17 @@ import {
   ApiForbiddenResponse,
   getSchemaPath 
 } from '@nestjs/swagger';
-import { Result, NewsResponse, ErrorResponse, errorResponseConst, errorMessageConst } from '@newsfeed/common';
 import { NewsService } from './news.service';
 import { CreateNewsDto } from './dto/create-news.dto';
 import { UpdateNewsDto } from './dto/update-news.dto';
+import { 
+  Result, 
+  NewsResponse, 
+  ErrorResponse, 
+  errorResponseConst, 
+  errorMessageConst, 
+  apiHeaderConst 
+} from '@newsfeed/common';
 
 @ApiBearerAuth()
 @ApiTags('News')
@@ -36,7 +43,7 @@ export class NewsController {
       `
     }
   )
-  @ApiHeader({ name: 'Authorization', description: '우측 자물쇠 버튼으로 토큰을 설정해주세요.', example: 'Bearer {token}' })
+  @ApiHeader(apiHeaderConst)
   @ApiBadRequestResponse({ 
     description: errorMessageConst.BadRequest, 
     schema: { type: 'object', properties: errorResponseConst } 
@@ -61,6 +68,7 @@ export class NewsController {
     },
   })
   async createOne(
+    @Headers('Authorization') authorization: string,
     @Param('pageId') pageId: string,
     @Body() body: CreateNewsDto
   ): Promise<any> {
@@ -81,7 +89,7 @@ export class NewsController {
       * 현재, 페이징이 고려되어 있지 않으며, 페이징 적용시 추가 데이터는 extraData에 반영합니다.
     `
   })
-  @ApiHeader({ name: 'Authorization', description: '우측 자물쇠 버튼으로 토큰을 설정해주세요.', example: 'Bearer {token}' })
+  @ApiHeader(apiHeaderConst)
   @ApiBadRequestResponse({ 
     description: errorMessageConst.BadRequest, 
     schema: { type: 'object', properties: errorResponseConst } 
@@ -106,7 +114,8 @@ export class NewsController {
       },
     },
   })
-  async findAll( 
+  async findAll(
+    @Headers('Authorization') authorization: string,
     @Param('pageId') pageId: string
   ): Promise<Result<NewsResponse[]>> {
     try {
@@ -124,7 +133,7 @@ export class NewsController {
       * 학교 관리자만 학교 소식을 조회할 수 있습니다.
     `
   })
-  @ApiHeader({ name: 'Authorization', description: '우측 자물쇠 버튼으로 토큰을 설정해주세요.', example: 'Bearer {token}' })
+  @ApiHeader(apiHeaderConst)
   @ApiBadRequestResponse({ 
     description: errorMessageConst.BadRequest, 
     schema: { type: 'object', properties: errorResponseConst } 
@@ -150,6 +159,7 @@ export class NewsController {
     },
   })
   async findOne(
+    @Headers('Authorization') authorization: string,
     @Param('pageId') pageId: string, 
     @Param('newsId') newsId: string
   ): Promise<Result<NewsResponse>> {
@@ -168,7 +178,7 @@ export class NewsController {
       * 학교 관리자만 학교 소식을 수정할 수 있습니다.
     `
   })
-  @ApiHeader({ name: 'Authorization', description: '우측 자물쇠 버튼으로 토큰을 설정해주세요.', example: 'Bearer {token}' })
+  @ApiHeader(apiHeaderConst)
   @ApiBadRequestResponse({ 
     description: errorMessageConst.BadRequest, 
     schema: { type: 'object', properties: errorResponseConst } 
@@ -183,6 +193,7 @@ export class NewsController {
   })
   @ApiOkResponse({ description: 'Ok.' })
   async updateOne(
+    @Headers('Authorization') authorization: string,
     @Param('pageId') pageId: string, 
     @Param('newsId') newsId: string,
     @Body() body: UpdateNewsDto
@@ -202,7 +213,7 @@ export class NewsController {
       * 학교 관리자만 학교 소식을 삭제할 수 있습니다.
     `
   })
-  @ApiHeader({ name: 'Authorization', description: '우측 자물쇠 버튼으로 토큰을 설정해주세요.', example: 'Bearer {token}' })
+  @ApiHeader(apiHeaderConst)
   @ApiBadRequestResponse({ 
     description: errorMessageConst.BadRequest, 
     schema: { type: 'object', properties: errorResponseConst } 
@@ -217,7 +228,9 @@ export class NewsController {
   })
   @ApiOkResponse({ description: 'Ok.' })
   async deleteOne(
-    @Param('pageId') pageId: string, @Param('newsId') newsId: string
+    @Headers('Authorization') authorization: string, 
+    @Param('pageId') pageId: string, 
+    @Param('newsId') newsId: string
   ): Promise<Result> {
     try {
       return await this.newsService.deleteOne(pageId, newsId);

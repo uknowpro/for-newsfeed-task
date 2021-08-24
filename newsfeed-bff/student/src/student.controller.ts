@@ -13,11 +13,19 @@ import {
   ApiForbiddenResponse, 
   getSchemaPath 
 } from '@nestjs/swagger';
-import { Result, StudentResponse, SubscriptionNewsResponse, ErrorResponse, errorResponseConst, errorMessageConst } from '@newsfeed/common';
 import { StudentService } from './student.service';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
 import { PatchStudentDto } from './dto/patch-student.dto';
+import { 
+  Result, 
+  StudentResponse, 
+  SubscriptionNewsResponse, 
+  ErrorResponse, 
+  errorResponseConst, 
+  errorMessageConst, 
+  apiHeaderConst 
+} from '@newsfeed/common';
 
 @ApiTags('Student')
 @Controller('students')
@@ -78,7 +86,7 @@ export class StudentController {
       * 학생만 자신의 정보를 조회할 수 있습니다.
     `
   })
-  @ApiHeader({ name: 'Authorization', description: '우측 자물쇠 버튼으로 토큰을 설정해주세요.', example: 'Bearer {token}' })
+  @ApiHeader(apiHeaderConst)
   @ApiBadRequestResponse({ 
     description: errorMessageConst.BadRequest, 
     schema: { type: 'object', properties: errorResponseConst } 
@@ -125,7 +133,7 @@ export class StudentController {
       * 학생만 자신의 정보를 수정할 수 있습니다.
     `
   })
-  @ApiHeader({ name: 'Authorization', description: '우측 자물쇠 버튼으로 토큰을 설정해주세요.', example: 'Bearer {token}' })
+  @ApiHeader(apiHeaderConst)
   @ApiBadRequestResponse({ 
     description: errorMessageConst.BadRequest, 
     schema: { type: 'object', properties: errorResponseConst } 
@@ -163,7 +171,7 @@ export class StudentController {
       * 구독정보를 수정시, 구독이 가능한 페이지인지를 검증하지 않습니다. 
     `
   })
-  @ApiHeader({ name: 'Authorization', description: 'Bearer {token}' })
+  @ApiHeader(apiHeaderConst)
   @ApiBadRequestResponse({ 
     description: errorMessageConst.BadRequest, 
     schema: { type: 'object', properties: errorResponseConst } 
@@ -200,7 +208,7 @@ export class StudentController {
       * 학생만 자신의 정보를 삭제할 수 있습니다.
     `
   })
-  @ApiHeader({ name: 'Authorization', description: '우측 자물쇠 버튼으로 토큰을 설정해주세요.', example: 'Bearer {token}' })
+  @ApiHeader(apiHeaderConst)
   @ApiBadRequestResponse({ 
     description: errorMessageConst.BadRequest, 
     schema: { type: 'object', properties: errorResponseConst } 
@@ -238,7 +246,7 @@ export class StudentController {
       * 현재, 페이징이 고려되어 있지 않으며, 페이징 적용시 추가 데이터는 extraData에 반영합니다.
     `
   })
-  @ApiHeader({ name: 'Authorization', description: '우측 자물쇠 버튼으로 토큰을 설정해주세요.', example: 'Bearer {token}' })
+  @ApiHeader(apiHeaderConst)
   @ApiBadRequestResponse({ 
     description: errorMessageConst.BadRequest, 
     schema: { type: 'object', properties: errorResponseConst } 
