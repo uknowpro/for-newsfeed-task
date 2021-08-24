@@ -27,7 +27,6 @@ service-up: service-build
 	@pm2 start --name newsfeed-bff  npm -- start
 
 service: service-install service-build service-up
-	@pm2 start --name newsfeed-bff  npm -- start
 
 service-down:
 	@pm2 delete 0
