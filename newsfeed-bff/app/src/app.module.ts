@@ -12,7 +12,7 @@ import { StudentModule } from '@newsfeed/student';
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
-        uri: configService.get<string>('db.mongoUri') || 'mongodb://localhost:27017/newsfeed',
+        uri: configService.get<string>('mongoUri'),
       }),
       inject: [ConfigService],
     }),

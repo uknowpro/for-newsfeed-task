@@ -23,6 +23,7 @@ async function bootstrap() {
       * 제약사항 등은 각 API별 description을 참고해주시면 됩니다.
     `)
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('spec', app, document);

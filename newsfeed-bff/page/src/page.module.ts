@@ -37,15 +37,7 @@ import { PageSchema, NewsSchema, UserSchema } from '@newsfeed/common';
         },
       },
     ]),
-    HttpModule.registerAsync({
-      useFactory: async (config: ConfigService, request: Request) => {
-        const useFactory: any = {
-          headers: {'Authorization': request.headers['authorization']}
-        }
-        return useFactory;
-      },
-      inject: [REQUEST]
-    }),
+    HttpModule,
     ConfigModule,
     // MongoModule
   ],

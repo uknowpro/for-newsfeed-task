@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Put, Patch, Headers, Param, Post, Delete, HttpException, HttpStatus, SetMetadata } from '@nestjs/common';
+import { Req, Body, Controller, Get, Put, Patch, Headers, Param, Post, Delete, HttpException, HttpStatus, SetMetadata } from '@nestjs/common';
 import { 
   ApiBearerAuth, 
   ApiOperation, 
@@ -27,7 +27,7 @@ export class StudentController {
   }
 
   @Post('')
-  @SetMetadata('role', 'public')
+  @SetMetadata('roles', ['public'])
   @ApiOperation({ 
     summary: '학생 정보를 등록',
     description: `
@@ -71,14 +71,14 @@ export class StudentController {
 
   @Get(':studentId')
   @ApiBearerAuth()
-  @SetMetadata('role', 'user')
+  @SetMetadata('roles', ['user'])
   @ApiOperation({ 
     summary: '학생 정보를 조회',
     description: `
       * 학생만 자신의 정보를 조회할 수 있습니다.
     `
   })
-  @ApiHeader({ name: 'Authorization', description: 'Bearer {token}' })
+  @ApiHeader({ name: 'Authorization', description: '우측 자물쇠 버튼으로 토큰을 설정해주세요.', example: 'Bearer {token}' })
   @ApiBadRequestResponse({ 
     description: errorMessageConst.BadRequest, 
     schema: { type: 'object', properties: errorResponseConst } 
@@ -108,14 +108,16 @@ export class StudentController {
     @Param('studentId') studentId: string
   ): Promise<Result<StudentResponse>> {
     try {
-      return await this.studentService.findOne(studentId);
+      const token: string = authorization.replace('Bearer ', '');
+      const account: string[] = (Buffer.from(token, 'base64').toString('utf8')).split(':');
+      return await this.studentService.findOne(account[0], studentId);
     } catch (err) {
       throw new HttpException(err, err.status || HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
   @Put(':studentId')
-  @SetMetadata('role', 'user')
+  @SetMetadata('roles', ['user'])
   @ApiBearerAuth()
   @ApiOperation({ 
     summary: '학생 정보를 수정',
@@ -123,7 +125,7 @@ export class StudentController {
       * 학생만 자신의 정보를 수정할 수 있습니다.
     `
   })
-  @ApiHeader({ name: 'Authorization', description: 'Bearer {token}' })
+  @ApiHeader({ name: 'Authorization', description: '우측 자물쇠 버튼으로 토큰을 설정해주세요.', example: 'Bearer {token}' })
   @ApiBadRequestResponse({ 
     description: errorMessageConst.BadRequest, 
     schema: { type: 'object', properties: errorResponseConst } 
@@ -143,14 +145,16 @@ export class StudentController {
     @Body() body: UpdateStudentDto
   ): Promise<any> {
     try {
-      return await this.studentService.updateOne(studentId, body);
+      const token: string = authorization.replace('Bearer ', '');
+      const account: string[] = (Buffer.from(token, 'base64').toString('utf8')).split(':');
+      return await this.studentService.updateOne(account[0], studentId, body);
     } catch (err) {
       throw new HttpException(err, err.status || HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
   @Patch(':studentId')
-  @SetMetadata('role', 'user')
+  @SetMetadata('roles', ['user'])
   @ApiBearerAuth()
   @ApiOperation({ 
     summary: '학생 계정의 패스워드 또는 학교 소식 구독정보를 수정',
@@ -179,14 +183,16 @@ export class StudentController {
     @Body() body: PatchStudentDto
   ): Promise<any> {
     try {
-      return await this.studentService.patchOne(studentId, body);
+      const token: string = authorization.replace('Bearer ', '');
+      const account: string[] = (Buffer.from(token, 'base64').toString('utf8')).split(':');
+      return await this.studentService.patchOne(account[0], studentId, body);
     } catch (err) {
       throw new HttpException(err, err.status || HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
   @Delete(':studentId')
-  @SetMetadata('role', 'user')
+  @SetMetadata('roles', ['user'])
   @ApiBearerAuth()
   @ApiOperation({ 
     summary: '학생 정보를 삭제',
@@ -194,7 +200,7 @@ export class StudentController {
       * 학생만 자신의 정보를 삭제할 수 있습니다.
     `
   })
-  @ApiHeader({ name: 'Authorization', description: 'Bearer {token}' })
+  @ApiHeader({ name: 'Authorization', description: '우측 자물쇠 버튼으로 토큰을 설정해주세요.', example: 'Bearer {token}' })
   @ApiBadRequestResponse({ 
     description: errorMessageConst.BadRequest, 
     schema: { type: 'object', properties: errorResponseConst } 
@@ -213,14 +219,16 @@ export class StudentController {
     @Param('studentId') studentId: string
   ): Promise<any> {
     try {
-      return await this.studentService.deleteOne(studentId);
+      const token: string = authorization.replace('Bearer ', '');
+      const account: string[] = (Buffer.from(token, 'base64').toString('utf8')).split(':');
+      return await this.studentService.deleteOne(account[0], studentId);
     } catch (err) {
       throw new HttpException(err, err.status || HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
   @Get(':studentId/subscription-news')
-  @SetMetadata('role', 'user')
+  @SetMetadata('roles', ['user'])
   @ApiBearerAuth()
   @ApiOperation({ 
     summary: '학생의 구독중인 학교 소식들을 조회',
@@ -230,7 +238,7 @@ export class StudentController {
       * 현재, 페이징이 고려되어 있지 않으며, 페이징 적용시 추가 데이터는 extraData에 반영합니다.
     `
   })
-  @ApiHeader({ name: 'Authorization', description: 'Bearer {token}' })
+  @ApiHeader({ name: 'Authorization', description: '우측 자물쇠 버튼으로 토큰을 설정해주세요.', example: 'Bearer {token}' })
   @ApiBadRequestResponse({ 
     description: errorMessageConst.BadRequest, 
     schema: { type: 'object', properties: errorResponseConst } 
@@ -260,7 +268,9 @@ export class StudentController {
     @Param('studentId') studentId: string
   ): Promise<Result<SubscriptionNewsResponse[]>> {
     try {
-      return await this.studentService.findSubscriptionNewsAll(studentId);
+      const token: string = authorization.replace('Bearer ', '');
+      const account: string[] = (Buffer.from(token, 'base64').toString('utf8')).split(':');
+      return await this.studentService.findSubscriptionNewsAll(account[0], studentId);
     } catch (err) {
       throw new HttpException(err, err.status || HttpStatus.INTERNAL_SERVER_ERROR);
     } 

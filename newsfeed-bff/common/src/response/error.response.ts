@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { exceptionConst } from '../constants';
+import { exceptionConst, errorMessageConst } from '../constants';
 
 export class ErrorResponse {
   @ApiProperty({
@@ -14,7 +14,13 @@ export class ErrorResponse {
   errorType: string;
 
   @ApiProperty({
-    example: 'Unexpected exception arise.'
+    example: [
+      errorMessageConst.BadRequest,
+      errorMessageConst.Forbidden,
+      errorMessageConst.InternalServerError,
+      errorMessageConst.NotFound,
+      errorMessageConst.Unexpected
+    ]
   })
   errorMessage: string;
 

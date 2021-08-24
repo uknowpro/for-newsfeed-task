@@ -4,7 +4,7 @@ import { Controller, SetMetadata, Get } from '@nestjs/common';
 export class AppController {
   constructor() {}
 
-  @SetMetadata('role', 'public')
+  @SetMetadata('roles', ['public'])
   @Get('ping')
   getHello(): string {
     return 'pong';

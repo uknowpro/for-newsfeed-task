@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Put, Headers, Query, Param, Post, Delete, HttpException, HttpStatus, SetMetadata } from '@nestjs/common';
+import { Req, Body, Controller, Get, Put, Headers, Query, Param, Post, Delete, HttpException, HttpStatus, SetMetadata } from '@nestjs/common';
 import { 
   ApiBearerAuth, 
   ApiOperation, 
@@ -17,6 +17,7 @@ import { Result, PageResponse, ErrorResponse, errorResponseConst, errorMessageCo
 import { PageService } from './page.service';
 import { CreatePageDto } from './dto/create-page.dto';
 import { UpdatePageDto } from './dto/update-page.dto';
+import { Request } from 'express';
 
 @ApiBearerAuth()
 @ApiTags('Page')
@@ -27,7 +28,7 @@ export class PageController {
   }
 
   @Post('')
-  @SetMetadata('role', 'admin')
+  @SetMetadata('roles', ['admin'])
   @ApiOperation({ 
     summary: '학교 페이지를 생성',
     description: `
@@ -35,7 +36,7 @@ export class PageController {
       * 학교 페이지명은 중복될 수 없습니다.
     `
   })
-  @ApiHeader({ name: 'Authorization', description: 'Bearer {token}' })
+  @ApiHeader({ name: 'Authorization', description: '우측 자물쇠 버튼으로 토큰을 설정해주세요.', example: 'Bearer {token}' })
   @ApiBadRequestResponse({ 
     description: errorMessageConst.BadRequest, 
     schema: { type: 'object', properties: errorResponseConst } 
@@ -71,7 +72,7 @@ export class PageController {
   }
 
   @Get('')
-  @SetMetadata('role', ['admin', 'user'])
+  @SetMetadata('roles', ['admin', 'user'])
   @ApiOperation({ 
     summary: '학교 페이지들 또는 학생이 구독중인 페이지들을 조회',
     description: `
@@ -81,7 +82,7 @@ export class PageController {
       * 현재, 페이징이 고려되어 있지 않으며, 페이징 적용시 추가 데이터는 extraData에 반영합니다.
     `
   })
-  @ApiHeader({ name: 'Authorization', description: 'Bearer {token}' })
+  @ApiHeader({ name: 'Authorization', description: '우측 자물쇠 버튼으로 토큰을 설정해주세요.', example: 'Bearer {token}' })
   @ApiBadRequestResponse({ 
     description: errorMessageConst.BadRequest, 
     schema: { type: 'object', properties: errorResponseConst } 
@@ -108,7 +109,6 @@ export class PageController {
     },
   })
   async findAll(
-    @Headers('Authorization') authorization: string, 
     @Query('subscriptorId') subscriptorId: string
   ): Promise<Result<PageResponse[]>> {
     try {
@@ -119,14 +119,14 @@ export class PageController {
   }
 
   @Get(':pageId')
-  @SetMetadata('role', ['admin', 'user'])
+  @SetMetadata('roles', ['admin', 'user'])
   @ApiOperation({ 
     summary: '학교 페이지를 조회',
     description: `
       * 학교 관리자 또는 학생만 학교 페이지를 조회할 수 있습니다.
     `
   })
-  @ApiHeader({ name: 'Authorization', description: 'Bearer {token}' })
+  @ApiHeader({ name: 'Authorization', description: '우측 자물쇠 버튼으로 토큰을 설정해주세요.', example: 'Bearer {token}' })
   @ApiBadRequestResponse({ 
     description: errorMessageConst.BadRequest, 
     schema: { type: 'object', properties: errorResponseConst } 
@@ -163,14 +163,14 @@ export class PageController {
   }
 
   @Put(':pageId')
-  @SetMetadata('role', 'admin')
+  @SetMetadata('roles', ['admin'])
   @ApiOperation({ 
     summary: '학교 페이지를 수정',
     description: `
       * 학교 관리자만 학교 페이지를 수정할 수 있습니다.
     `
   })
-  @ApiHeader({ name: 'Authorization', description: 'Bearer {token}' })
+  @ApiHeader({ name: 'Authorization', description: '우측 자물쇠 버튼으로 토큰을 설정해주세요.', example: 'Bearer {token}' })
   @ApiBadRequestResponse({ 
     description: errorMessageConst.BadRequest, 
     schema: { type: 'object', properties: errorResponseConst } 
@@ -184,7 +184,6 @@ export class PageController {
     schema: { type: 'object', properties: errorResponseConst } 
   })
   async updateOne(
-    @Headers('Authorization') authorization: string, 
     @Param('pageId') pageId: string,
     @Body() body: UpdatePageDto
   ): Promise<any> {
@@ -196,14 +195,14 @@ export class PageController {
   }
 
   @Delete(':pageId')
-  @SetMetadata('role', 'admin')
+  @SetMetadata('roles', ['admin'])
   @ApiOperation({ 
     summary: '학교 페이지를 삭제',
     description: `
       * 학교 관리자만 학교 페이지를 삭제할 수 있습니다.
     `
   })
-  @ApiHeader({ name: 'Authorization', description: 'Bearer {token}' })
+  @ApiHeader({ name: 'Authorization', description: '우측 자물쇠 버튼으로 토큰을 설정해주세요.', example: 'Bearer {token}' })
   @ApiBadRequestResponse({ 
     description: errorMessageConst.BadRequest, 
     schema: { type: 'object', properties: errorResponseConst } 
@@ -217,7 +216,6 @@ export class PageController {
     schema: { type: 'object', properties: errorResponseConst } 
   })
   async deleteOne(
-    @Headers('Authorization') authorization: string, 
     @Param('pageId') pageId: string
   ): Promise<any> {
     try {

@@ -1,7 +1,7 @@
-import { CanActivate, ExecutionContext, Injectable} from '@nestjs/common';
+import { CanActivate, ExecutionContext, Injectable, ForbiddenException, BadRequestException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
-import { Mongoose } from 'mongoose';
+// import { Mongoose } from 'mongoose';
 import { UserSchema } from '../schema/user.schema';
 
 @Injectable()
@@ -9,61 +9,54 @@ export class RolesGuard implements CanActivate {
   constructor(
     private readonly reflector: Reflector, 
     private readonly configService: ConfigService,
-    private mongoConn: Mongoose
+    // private mongoConn: Mongoose
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const role = this.reflector.get<string>('role', context.getHandler());
-    if (role == 'public') {
+    const roles = this.reflector.get('roles', context.getHandler());
+    if (roles.find(role => role === 'public')) {
       return true;
     }
-
-    return true;
-
     let request = context.switchToHttp().getRequest();
-    console.log('[TEST] request: '+request);
     const authHeader = request.headers['authorization'];
-    console.log('[TEST] Authorization: '+authHeader);
-    if (authHeader) {
-      const auth = authHeader.trim().split(' ');
-      if (auth?.length > 0) {
-        const token = auth[auth.length - 1];
-        if (token == null) {
-          return false;
-        }
-        
-        const decodedToken = Buffer.from(token, 'base64').toString('utf8');
-        const account = decodedToken.split(':');
-        console.log('[TEST] decodedToke: '+decodedToken);
-        if (account?.length < 2) {
-          return false;
-        }
-
-        if (role == 'admin') {
-          const id = this.configService.get<string>('adminAuth.id');
-          const password = this.configService.get<string>('adminAuth.password');
-          if (account[0] == id && account[1] == password) {
-            return true;
-          } else {
-            return false;
-          }
-        } else if (role == 'user') {
-          const model = (await this.mongoConn.connect(this.configService.get<string>('mongoUri'))).model('User', UserSchema);
-          const user = model.findOne({id: account[0]});
-
-          if (!user) {
-            return false;
-          }
-
-          if (account[0] == user.id && account[1] == user.password) {
-            return true;
-          } else {
-            return false;
-          }
-        }
-        return true;
-      }
-      return false;
+    if (!authHeader) {
+      throw new BadRequestException('Must need token.');
     }
+    const auth = authHeader.trim().split(' ');
+    if (auth?.length < 2) {
+      throw new BadRequestException('Invalid authorization.');
+    }
+    const token = auth[auth.length-1];
+    if (!token) {
+      throw new BadRequestException('Invalid authorization.');
+    }
+    const decodedToken = Buffer.from(token, 'base64').toString('utf8');
+    const accountInfo = decodedToken.split(':');
+    if (accountInfo?.length < 2) {
+      throw new BadRequestException('Unknown account info in your token.');
+    }
+    if (roles.find(
+      async (role) => {
+        if (role === 'admin') {
+          const adminId = this.configService.get<string>('adminAuth.id');
+          if (accountInfo[0] == adminId) {
+            return true;
+          }
+        } else if (role === 'user') {
+          const mongoose = require('mongoose');
+          const conn = await mongoose.createConnection(this.configService.get<string>('mongoUri'), {useNewUrlParser: true, useUnifiedTopology: true});
+          const userModel = conn.model('User', UserSchema);
+          const user = userModel.findOne({id: accountInfo[0], password: accountInfo[1]});
+          if (user) {
+            request.headers['User-Id'] = accountInfo[0];
+            return true;
+          }
+        }
+        return false;
+      }
+    )) {
+      return true;
+    }
+    throw new ForbiddenException('Invalid account in your token.');
   }
 }

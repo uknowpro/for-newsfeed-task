@@ -20,7 +20,10 @@ export class StudentService {
     return Result.of([this.buildStudentInfo(user)]);
   }
 
-  async findOne(studentId: string): Promise<Result<UserResponse[]>> {
+  async findOne(userId: string, studentId: string): Promise<Result<UserResponse[]>> {
+    if (userId != studentId) {
+      throw new BadRequestException('Can not see other student info.');
+    }
     const user = await this.userModel.findOne({id: studentId});
     if (!user) {
       throw new BadRequestException('No student exist.');
@@ -28,7 +31,10 @@ export class StudentService {
     return Result.of([this.buildStudentInfo(user)]);
   }
 
-  async updateOne(studentId: string, updateStudentDto: UpdateStudentDto): Promise<any> {
+  async updateOne(userId: string, studentId: string, updateStudentDto: UpdateStudentDto): Promise<any> {
+    if (userId != studentId) {
+      throw new BadRequestException('Can not modify other student info.');
+    }
     const user = await this.userModel.findOne({id: studentId});
     if (!user) {
       throw new BadRequestException('No student exist.');
@@ -37,7 +43,10 @@ export class StudentService {
     return;
   }
 
-  async patchOne(studentId: string, patchStudentDto: PatchStudentDto): Promise<any> {
+  async patchOne(userId: string, studentId: string, patchStudentDto: PatchStudentDto): Promise<any> {
+    if (userId != studentId) {
+      throw new BadRequestException('Can not modify other student info.');
+    }
     let patchDocument: any;
     if (patchStudentDto.type == 'password') {
       patchDocument = {
@@ -58,7 +67,10 @@ export class StudentService {
     return;
   }
 
-  async deleteOne(studentId: string): Promise<any> {
+  async deleteOne(userId: string, studentId: string): Promise<any> {
+    if (userId != studentId) {
+      throw new BadRequestException('Can not delete other student info.');
+    }
     const user = await this.userModel.findOne({id: studentId});
     if (!user) {
       throw new BadRequestException('No student exist.');
@@ -67,7 +79,10 @@ export class StudentService {
     return;
   }
 
-  async findSubscriptionNewsAll(studentId: string): Promise<Result<NewsResponse[]>> {
+  async findSubscriptionNewsAll(userId: string, studentId: string): Promise<Result<NewsResponse[]>> {
+    if (userId != studentId) {
+      throw new BadRequestException('Can not see other student info.');
+    }
     const student = await this.userModel.findOne({id: studentId});
     if (!student) {
       throw new BadRequestException('No student exist.');
