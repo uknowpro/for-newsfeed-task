@@ -4,4 +4,5 @@ COLLECTIONS ?= \
 
 test:
 	@for collection in $(COLLECTIONS); do \
-		newman run ./postman-collection/$$collection -e ./postman-collection/NEWSFEED_LOCAL.postman_environment.json --verbose --color on;
+		newman run ./postman-collection/$$collection -e ./postman-collection/NEWSFEED_LOCAL.postman_environment.json --verbose --color on; \
+	done

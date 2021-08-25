@@ -21,7 +21,7 @@ service-install:
 	@npm install
 
 service-build:
-	@npm run bootstrap && npm run build
+	@pm2 start --name newsfeed-bff  npm -- start >/dev/null 2>&1 || true
 
 service-up: service-build
 	@pm2 start --name newsfeed-bff  npm -- start
@@ -29,11 +29,11 @@ service-up: service-build
 service: service-install service-build service-up
 
 service-down:
-	@pm2 delete newsfeed-bff
+	@pm2 delete newsfeed-bff >/dev/null 2>&1 || true
 
 clean: service-down infra-clean network-clean
 
 test: clean infra service
-	@cd test && make -f Makefile-test.mk test && cd -
+	@cd test && make -f Makefile-test.mk test && cd -;
 
 .PHONY: clean network network-clean infra infra-down infra-clean service-install service-build service-up service-down integrated-test
