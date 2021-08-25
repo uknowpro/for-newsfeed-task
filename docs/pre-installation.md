@@ -7,7 +7,8 @@ $ sudo apt install docker-compose
 $ curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
 $ sudo apt install -y nodejs
 $ sudo npm install -g @nestjs/cli
-$ sudo npm install pm2 -g
+$ sudo npm install -g pm2
+$ sudo npm install -g newman
 ```
 
 ### Manage Docker as n non-root user

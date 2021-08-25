@@ -27,8 +27,8 @@ $ sudo apt install docker-compose
 $ curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
 $ sudo apt install -y nodejs
 $ sudo npm install -g @nestjs/cli
-$ sudo npm install pm2 -g
-$ sudo npm install newman
+$ sudo npm install -g pm2
+$ sudo npm install -g newman
 ```
 
 ## 구동 방법
@@ -62,6 +62,7 @@ lerna success - @newsfeed/student
 
 ## 테스트 실행
 **로컬 환경에서 테스트를 실행 하려면, 사전 설치 및 MongoDB 실행이 완료되어야 합니다.**
+**아래의 커맨드는 수행완료까지 테스트 환경에 따라 약 1~5분 가량 소요될 수 있습니다.**
 ```
 $ makefile -f Makefile-local.mk test
 ```
