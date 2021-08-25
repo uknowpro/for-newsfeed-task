@@ -5,6 +5,18 @@ export const PageSchema = new mongoose.Schema({
         type: String,
         required: [true, 'ID_IS_BLANK']
     },
+    schoolName: {
+        type: String,
+        minlength: 1,
+        maxlength: 256,
+        required: [true, 'SCHOOL_NAME_IS_BLANK'],
+    },
+    region: {
+        type: String,
+        minlength: 1,
+        maxlength: 256,
+        required: [true, 'REGION_IS_BLANK'],
+    },
     name: {
         type: String,
         minlength: 1,
@@ -15,7 +27,7 @@ export const PageSchema = new mongoose.Schema({
         type: String,
         minlength: 1,
         maxlength: 1024,
-        required: [true, 'DESCRIPTION_IS_BLANK'],
+        required: [false, 'DESCRIPTION_IS_BLANK'],
     },
     extra: {
         type: Object,

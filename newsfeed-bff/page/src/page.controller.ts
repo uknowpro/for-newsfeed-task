@@ -40,7 +40,7 @@ export class PageController {
     summary: '학교 페이지를 생성',
     description: `
       * 학교 관리자만 학교 페이지를 생성할 수 있습니다.
-      * 학교 페이지명은 중복될 수 없습니다.
+      * 학교 명, 지역, 페이지명은 동시에 중복될 수 없습니다.
     `
   })
   @ApiHeader(apiHeaderConst)

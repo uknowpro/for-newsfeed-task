@@ -39,7 +39,8 @@ export class RolesGuard implements CanActivate {
       async (role) => {
         if (role === 'admin') {
           const adminId = this.configService.get<string>('adminAuth.id');
-          if (accountInfo[0] == adminId) {
+          const adminPwd = this.configService.get<string>('adminAuth.password');
+          if (accountInfo[0] == adminId && accountInfo[1] == adminPwd) {
             return true;
           }
         } else if (role === 'user') {

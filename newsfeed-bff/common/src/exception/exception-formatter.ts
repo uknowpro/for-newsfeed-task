@@ -19,7 +19,7 @@ export class ExceptionFormatter implements ExceptionFilter<HttpException> {
       .json({
         errorType: toExceptionConst(status),
         errorMessage: errorResponse.message || 'Internal server error.',
-        errors: errorResponse.customErrors || errorMessageConst.Unexpected
+        errors: errorResponse.customErrors || []
       })
   }
 }

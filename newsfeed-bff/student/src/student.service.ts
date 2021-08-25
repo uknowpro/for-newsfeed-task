@@ -79,7 +79,7 @@ export class StudentService {
     return;
   }
 
-  async findSubscriptionNewsAll(userId: string, studentId: string): Promise<Result<NewsResponse[]>> {
+  async findSubscriptionNewsAll(userId: string, studentId: string, pageId: string): Promise<Result<NewsResponse[]>> {
     if (userId != studentId) {
       throw new BadRequestException('Can not see other student info.');
     }
@@ -87,9 +87,18 @@ export class StudentService {
     if (!student) {
       throw new BadRequestException('No student exist.');
     }
-    const subscriptionPages = student.subscriptionPages.map(async pageId => {
-      return {pageId: pageId};
-    });
+    let subscriptionPages: object[];
+    if (pageId) {
+      if (await student.subscriptionPages.filter(id => id === pageId)) {
+        subscriptionPages = [{pageId}];
+      } else {
+        throw new BadRequestException('No subscription page.');
+      }
+    } else {
+      subscriptionPages = await Promise.all(student.subscriptionPages.map(async pageId => {
+        return {pageId};
+      }));
+    }
     const newsResults = await this.newsModel.find({$or: subscriptionPages}).sort({'createdAt': -1});
     const news: NewsResponse[] = await Promise.all(newsResults.map(result => this.buildNewsInfo(result)));
     return Result.of(news);

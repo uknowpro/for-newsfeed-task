@@ -16,7 +16,7 @@ export class UpdatePageDto {
   })
   @IsString()
   @IsNotEmpty()
-  description: string;
+  description?: string;
 
   @ApiProperty({ 
     description: `(Optional) 확장성을 위한 추가 데이터`,

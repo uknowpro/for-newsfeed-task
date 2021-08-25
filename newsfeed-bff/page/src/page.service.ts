@@ -17,7 +17,7 @@ export class PageService {
   async createOne(createPageDto: CreatePageDto): Promise<Result<PageResponse[]>> {
     const pageDocument = this.buildPageDocument(createPageDto);
     const page = new this.pageModel(pageDocument);
-    await this.isPageNameUnique(page.name);
+    await this.isPageUnique(page.schoolName, page.region, page.name);
     await page.save();
     return Result.of([this.buildPageInfo(pageDocument)]);
   }
@@ -70,6 +70,8 @@ export class PageService {
   private buildPageInfo(page: Page): PageResponse {
     const pageInfo = {
       pageId: page.id,
+      schoolName: page.schoolName,
+      region: page.region,
       name: page.name,
       description: page.description,
       extra: page.extra || {}
@@ -80,17 +82,19 @@ export class PageService {
   private buildPageDocument(page: CreatePageDto): Page {
     const pageDocument = {
       id: uuidv4(),
+      schoolName: page.schoolName,
+      region: page.region,
       name: page.name,
-      description: page.description,
+      description: page.description || '',
       extra: page.extra || {}
     };
     return pageDocument;
   }
 
-  private async isPageNameUnique(name: string) {
-    const user = await this.pageModel.findOne({name});
+  private async isPageUnique(schoolName: string, region: string, name: string) {
+    const user = await this.pageModel.findOne({schoolName, region, name});
     if (user) {
-        throw new BadRequestException('Already exists page name.');
+        throw new BadRequestException('Already page exist.');
     }
   }
 }

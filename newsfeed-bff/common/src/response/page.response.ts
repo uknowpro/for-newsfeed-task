@@ -8,6 +8,18 @@ export class PageResponse {
   pageId: string;
 
   @ApiProperty({ 
+    description: `학교 명`,
+    example: '학교 명'
+  })
+  schoolName: string;
+
+  @ApiProperty({ 
+    description: `지역 명`,
+    example: '지역 명'
+  })
+  region: string;
+
+  @ApiProperty({ 
     description: `페이지 명`,
     example: '페이지 명'
   })

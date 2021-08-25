@@ -273,12 +273,13 @@ export class StudentController {
   })
   async findSubscriptionNewsAll(
     @Headers('Authorization') authorization: string, 
-    @Param('studentId') studentId: string
+    @Param('studentId') studentId: string,
+    @Param('pageId') pageId?: string
   ): Promise<Result<SubscriptionNewsResponse[]>> {
     try {
       const token: string = authorization.replace('Bearer ', '');
       const account: string[] = (Buffer.from(token, 'base64').toString('utf8')).split(':');
-      return await this.studentService.findSubscriptionNewsAll(account[0], studentId);
+      return await this.studentService.findSubscriptionNewsAll(account[0], studentId, pageId);
     } catch (err) {
       throw new HttpException(err, err.status || HttpStatus.INTERNAL_SERVER_ERROR);
     } 
