@@ -58,14 +58,7 @@ export class StudentController {
   })
   @ApiResponse({
     status: 201,
-    schema: {
-      type: 'object',
-      required: ['data', 'extraData'],
-      properties: {
-        data: { type: 'array', items: { type: 'object', $ref: getSchemaPath(StudentResponse) } },
-        extraData: { type: 'object' }
-      },
-    },
+    schema: null,
   })
   async createOne(
     @Body() body: CreateStudentDto

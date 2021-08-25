@@ -1,0 +1,615 @@
+{
+	"info": {
+		"_postman_id": "10906b66-4a0b-4c68-80dd-a724d27d634a",
+		"name": "CASE_2_VALIDATION_TEST",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Required",
+			"item": [
+				{
+					"name": "Must studentId be required when to create student",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 400ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+									"});\r",
+									"var schema = {\r",
+									"    'type': 'object',\r",
+									"    'required': [\r",
+									"        'errorType', 'errorMessage', 'errors'\r",
+									"    ],\r",
+									"    'properties': {\r",
+									"        'errorType': {'type': 'string','nullable': false},\r",
+									"        'errorMessage': {'type': 'string','nullable': false},\r",
+									"        'errors': {\r",
+									"            'type': 'array'\r",
+									"        },\r",
+									"    }\r",
+									"};\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test('Reponse Body Schema is valid', function() {\r",
+									"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"password\": \"패스워드\",\r\n  \"name\": \"학생 명\",\r\n  \"subscriptionPages\": [\r\n    \"1\",\r\n    \"2\"\r\n  ],\r\n  \"extra\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{NEWSFEED_HOST}}/v1/students",
+							"host": [
+								"{{NEWSFEED_HOST}}"
+							],
+							"path": [
+								"v1",
+								"students"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Must password be required when to create student",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 400ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+									"});\r",
+									"var schema = {\r",
+									"    'type': 'object',\r",
+									"    'required': [\r",
+									"        'errorType', 'errorMessage', 'errors'\r",
+									"    ],\r",
+									"    'properties': {\r",
+									"        'errorType': {'type': 'string','nullable': false},\r",
+									"        'errorMessage': {'type': 'string','nullable': false},\r",
+									"        'errors': {\r",
+									"            'type': 'array'\r",
+									"        },\r",
+									"    }\r",
+									"};\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test('Reponse Body Schema is valid', function() {\r",
+									"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"studentId\": \"12345\",\r\n  \"name\": \"학생 명\",\r\n  \"subscriptionPages\": [\r\n    \"1\",\r\n    \"2\"\r\n  ],\r\n  \"extra\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{NEWSFEED_HOST}}/v1/students",
+							"host": [
+								"{{NEWSFEED_HOST}}"
+							],
+							"path": [
+								"v1",
+								"students"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Must name be required when to create student",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 400ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+									"});\r",
+									"var schema = {\r",
+									"    'type': 'object',\r",
+									"    'required': [\r",
+									"        'errorType', 'errorMessage', 'errors'\r",
+									"    ],\r",
+									"    'properties': {\r",
+									"        'errorType': {'type': 'string','nullable': false},\r",
+									"        'errorMessage': {'type': 'string','nullable': false},\r",
+									"        'errors': {\r",
+									"            'type': 'array'\r",
+									"        },\r",
+									"    }\r",
+									"};\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test('Reponse Body Schema is valid', function() {\r",
+									"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"studentId\": \"12345\",\r\n  \"password\": \"패스워드\",\r\n  \"subscriptionPages\": [\r\n    \"1\",\r\n    \"2\"\r\n  ],\r\n  \"extra\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{NEWSFEED_HOST}}/v1/students",
+							"host": [
+								"{{NEWSFEED_HOST}}"
+							],
+							"path": [
+								"v1",
+								"students"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /v1/pages",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 400ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+									"});\r",
+									"var schema = {\r",
+									"    'type': 'object',\r",
+									"    'required': [\r",
+									"        'data',\r",
+									"    ],\r",
+									"    'properties': {\r",
+									"        'data': {\r",
+									"            'type': 'array',\r",
+									"            'items': {\r",
+									"                'required': [\r",
+									"                    'pageId', 'schoolName', 'region', 'name'\r",
+									"                ],\r",
+									"                'properties': {\r",
+									"                    'pageId': {'type': 'string','nullable': false},\r",
+									"                    'schoolName': {'type': 'string','nullable': false},\r",
+									"                    'region': {'type': 'string','nullable': false},\r",
+									"                    'name': {'type': 'string','nullable': false},\r",
+									"                    'description': {'type': 'string','nullable': false},\r",
+									"                    'extra': {'type': 'object','nullable': false},\r",
+									"                }\r",
+									"            }\r",
+									"        },\r",
+									"        'extraData': {'type': 'object','nullable': false}\r",
+									"    }\r",
+									"};\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test('Reponse Body Schema is valid', function() {\r",
+									"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;\r",
+									"});\r",
+									"pm.test(\"Check the length of the response\", function () {\r",
+									"    pm.expect(Object.keys(jsonData.data).length).to.equal(1);\r",
+									"});\r",
+									"pm.environment.set(\"PAGE_ID\", jsonData.data[0].pageId);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ADMIN_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"schoolName\": \"학교 명\",\r\n  \"region\": \"지역 명\",\r\n  \"name\": \"페이지 명\",\r\n  \"description\": \"페이지 설명\",\r\n  \"extra\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{NEWSFEED_HOST}}/v1/pages",
+							"host": [
+								"{{NEWSFEED_HOST}}"
+							],
+							"path": [
+								"v1",
+								"pages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Must title be required when to create news",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 400ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+									"});\r",
+									"var schema = {\r",
+									"    'type': 'object',\r",
+									"    'required': [\r",
+									"        'errorType', 'errorMessage', 'errors'\r",
+									"    ],\r",
+									"    'properties': {\r",
+									"        'errorType': {'type': 'string','nullable': false},\r",
+									"        'errorMessage': {'type': 'string','nullable': false},\r",
+									"        'errors': {\r",
+									"            'type': 'array'\r",
+									"        },\r",
+									"    }\r",
+									"};\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test('Reponse Body Schema is valid', function() {\r",
+									"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ADMIN_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"content\": \"내용\",\r\n  \"extra\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{NEWSFEED_HOST}}/v1/pages/{{PAGE_ID}}/news",
+							"host": [
+								"{{NEWSFEED_HOST}}"
+							],
+							"path": [
+								"v1",
+								"pages",
+								"{{PAGE_ID}}",
+								"news"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Must content be required when to create news",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 400ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+									"});\r",
+									"var schema = {\r",
+									"    'type': 'object',\r",
+									"    'required': [\r",
+									"        'errorType', 'errorMessage', 'errors'\r",
+									"    ],\r",
+									"    'properties': {\r",
+									"        'errorType': {'type': 'string','nullable': false},\r",
+									"        'errorMessage': {'type': 'string','nullable': false},\r",
+									"        'errors': {\r",
+									"            'type': 'array'\r",
+									"        },\r",
+									"    }\r",
+									"};\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test('Reponse Body Schema is valid', function() {\r",
+									"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ADMIN_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"제목\",\r\n  \"extra\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{NEWSFEED_HOST}}/v1/pages/{{PAGE_ID}}/news",
+							"host": [
+								"{{NEWSFEED_HOST}}"
+							],
+							"path": [
+								"v1",
+								"pages",
+								"{{PAGE_ID}}",
+								"news"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "IsExistParentResource",
+			"item": [
+				{
+					"name": "Must page be exist when to create news",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 400ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+									"});\r",
+									"var schema = {\r",
+									"    'type': 'object',\r",
+									"    'required': [\r",
+									"        'errorType', 'errorMessage', 'errors'\r",
+									"    ],\r",
+									"    'properties': {\r",
+									"        'errorType': {'type': 'string','nullable': false},\r",
+									"        'errorMessage': {'type': 'string','nullable': false},\r",
+									"        'errors': {\r",
+									"            'type': 'array'\r",
+									"        },\r",
+									"    }\r",
+									"};\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test('Reponse Body Schema is valid', function() {\r",
+									"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ADMIN_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"제목\",\r\n  \"content\": \"내용\",\r\n  \"extra\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{NEWSFEED_HOST}}/v1/pages/999999/news",
+							"host": [
+								"{{NEWSFEED_HOST}}"
+							],
+							"path": [
+								"v1",
+								"pages",
+								"999999",
+								"news"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Must page be exist when to update news",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 400ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+									"});\r",
+									"var schema = {\r",
+									"    'type': 'object',\r",
+									"    'required': [\r",
+									"        'errorType', 'errorMessage', 'errors'\r",
+									"    ],\r",
+									"    'properties': {\r",
+									"        'errorType': {'type': 'string','nullable': false},\r",
+									"        'errorMessage': {'type': 'string','nullable': false},\r",
+									"        'errors': {\r",
+									"            'type': 'array'\r",
+									"        },\r",
+									"    }\r",
+									"};\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test('Reponse Body Schema is valid', function() {\r",
+									"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ADMIN_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"제목\",\r\n  \"content\": \"내용\",\r\n  \"extra\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{NEWSFEED_HOST}}/v1/pages/99999/news/12345",
+							"host": [
+								"{{NEWSFEED_HOST}}"
+							],
+							"path": [
+								"v1",
+								"pages",
+								"99999",
+								"news",
+								"12345"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Must page be exist when to remove news",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 400ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+									"});\r",
+									"var schema = {\r",
+									"    'type': 'object',\r",
+									"    'required': [\r",
+									"        'errorType', 'errorMessage', 'errors'\r",
+									"    ],\r",
+									"    'properties': {\r",
+									"        'errorType': {'type': 'string','nullable': false},\r",
+									"        'errorMessage': {'type': 'string','nullable': false},\r",
+									"        'errors': {\r",
+									"            'type': 'array'\r",
+									"        },\r",
+									"    }\r",
+									"};\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test('Reponse Body Schema is valid', function() {\r",
+									"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ADMIN_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{NEWSFEED_HOST}}/v1/pages/999999/news/12345",
+							"host": [
+								"{{NEWSFEED_HOST}}"
+							],
+							"path": [
+								"v1",
+								"pages",
+								"999999",
+								"news",
+								"12345"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

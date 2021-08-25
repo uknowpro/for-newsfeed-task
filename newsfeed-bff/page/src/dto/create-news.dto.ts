@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNotEmpty, IsObject } from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional, IsObject } from 'class-validator';
 
 export class CreateNewsDto {
   @ApiProperty({ 
@@ -14,6 +14,7 @@ export class CreateNewsDto {
     description: `내용`,
     example: '내용'
   })
+  @IsOptional()
   @IsString()
   content?: string;
 
@@ -21,6 +22,7 @@ export class CreateNewsDto {
     description: `(Optional) 확장성을 위한 추가 데이터`,
     example: {}
   })
+  @IsOptional()
   @IsObject()
   extra?: object;
 }

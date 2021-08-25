@@ -14,10 +14,7 @@ export class NewsService {
   ) {}
 
   async createOne(pageId: string, createNewsDto: CreateNewsDto): Promise<Result<NewsResponse[]>> {
-    const page = this.pageModel.findOne({id: pageId});
-    if (!page) {
-      throw new BadRequestException('No page exist.');
-    }
+    await this.isPageExist(pageId);
     await this.isNewsTitleUnique(createNewsDto.title);
     const newsDocument = this.buildNewsDocument(pageId, createNewsDto);
     const news = new this.newsModel(newsDocument);
@@ -30,21 +27,14 @@ export class NewsService {
   }
 
   async findAll(pageId: string): Promise<Result<NewsResponse[]>> {
-    const page = this.pageModel.findOne({id: pageId});
-    if (!page) {
-      throw new BadRequestException('No page exist.');
-    }
-
+    await this.isPageExist(pageId);
     const newsResults = await this.newsModel.find({pageId: {$eq: pageId}}).sort({'createdAt': -1});
     const news: News[] = await Promise.all(newsResults.map(result => this.buildNewsInfo(result)));
     return Result.of(news);
   }
 
   async findOne(pageId: string, newsId: string): Promise<Result<NewsResponse[]>> {
-    const page = this.pageModel.findOne({id: pageId});
-    if (!page) {
-      throw new BadRequestException('No page exist.');
-    }
+    await this.isPageExist(pageId);
     const news = await this.newsModel.findOne({pageId, id: newsId});
     if (!news) {
       throw new BadRequestException('No news exist.');
@@ -53,19 +43,15 @@ export class NewsService {
   }
 
   async updateOne(pageId: string, newsId: string, updateNewsDto: UpdateNewsDto): Promise<any> {
-    const news = await this.newsModel.findOne({pageId, id: newsId});
-    if (!news) {
-      throw new BadRequestException('No news exist.');
-    }
+    await this.isPageExist(pageId);
+    await this.isNewsExist(pageId, newsId);
     await this.newsModel.updateOne({id: newsId}, updateNewsDto);
     return;
   }
 
   async deleteOne(pageId: string, newsId: string): Promise<any> {
-    const news = await this.newsModel.findOne({pageId, id: newsId});
-    if (!news) {
-      throw new BadRequestException('No news exist.');
-    }
+    await this.isPageExist(pageId);
+    await this.isNewsExist(pageId, newsId);
     await this.newsModel.deleteOne({pageId, id: newsId});
     return;
   }
@@ -99,6 +85,20 @@ export class NewsService {
     const user = await this.newsModel.findOne({title});
     if (user) {
         throw new BadRequestException('Already exists news title.');
+    }
+  }
+
+  private async isPageExist(pageId: string) {
+    const page = await this.pageModel.findOne({id: pageId});
+    if (!page) {
+      throw new BadRequestException('No page exist.');
+    }
+  }
+
+  private async isNewsExist(pageId: string, newsId: string) {
+    const news = await this.newsModel.findOne({pageId, id: newsId});
+    if (!news) {
+      throw new BadRequestException('No news exist.');
     }
   }
 }

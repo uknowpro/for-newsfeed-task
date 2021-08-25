@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNotEmpty, IsObject } from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional, IsObject } from 'class-validator';
 
 export class CreatePageDto {
   @ApiProperty({ 
@@ -30,6 +30,7 @@ export class CreatePageDto {
     description: `페이지 설명`,
     example: '페이지 설명'
   })
+  @IsOptional()
   @IsString()
   @IsNotEmpty()
   description?: string;
@@ -38,6 +39,7 @@ export class CreatePageDto {
     description: `(Optional) 확장성을 위한 추가 데이터`,
     example: {}
   })
+  @IsOptional()
   @IsObject()
   extra?: object;
 }

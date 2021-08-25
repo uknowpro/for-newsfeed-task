@@ -49,19 +49,13 @@ export class PageService {
   }
 
   async updateOne(pageId: string, updatePageDto: UpdatePageDto): Promise<any> {
-    const page = await this.pageModel.findOne({id: pageId});
-    if (!page) {
-      throw new BadRequestException('No page found.');
-    }
+    await this.isPageExist(pageId);
     await this.pageModel.updateOne({id: pageId}, updatePageDto);
     return;
   }
 
   async deleteOne(pageId: string): Promise<any> {
-    const page = await this.pageModel.findOne({id: pageId});
-    if (!page) {
-      throw new BadRequestException('No page found.');
-    }
+    await this.isPageExist(pageId);
     await this.pageModel.deleteOne({id: pageId});
     await this.newsModel.deleteMany({pageId});
     return;
@@ -95,6 +89,13 @@ export class PageService {
     const user = await this.pageModel.findOne({schoolName, region, name});
     if (user) {
         throw new BadRequestException('Already page exist.');
+    }
+  }
+
+  private async isPageExist(pageId: string) {
+    const page = await this.pageModel.findOne({id: pageId});
+    if (!page) {
+      throw new BadRequestException('No page found.');
     }
   }
 }

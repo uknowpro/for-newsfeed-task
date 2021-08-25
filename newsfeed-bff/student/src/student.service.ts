@@ -15,9 +15,9 @@ export class StudentService {
   
   async createOne(createStudentDto: CreateStudentDto): Promise<Result<UserResponse[]>> {
     const user = new this.userModel(this.buildUserInfo(createStudentDto));
-    await this.isIdUnique(user.id);
+    await this.isStudentUnique(user.id);
     await user.save();
-    return Result.of([this.buildStudentInfo(user)]);
+    return;
   }
 
   async findOne(userId: string, studentId: string): Promise<Result<UserResponse[]>> {
@@ -35,10 +35,7 @@ export class StudentService {
     if (userId != studentId) {
       throw new BadRequestException('Can not modify other student info.');
     }
-    const user = await this.userModel.findOne({id: studentId});
-    if (!user) {
-      throw new BadRequestException('No student exist.');
-    }
+    await this.isStudentExist(studentId);
     await this.userModel.updateOne({id: studentId}, updateStudentDto);
     return;
   }
@@ -59,10 +56,7 @@ export class StudentService {
     } else {
       throw new BadRequestException('Invalid type in request body data.');
     }
-    const user = await this.userModel.findOne({id: studentId});
-    if (!user) {
-      throw new BadRequestException('No student exist.');
-    }
+    await this.isStudentExist(studentId);
     await this.userModel.updateOne({id: studentId}, patchDocument);
     return;
   }
@@ -71,10 +65,7 @@ export class StudentService {
     if (userId != studentId) {
       throw new BadRequestException('Can not delete other student info.');
     }
-    const user = await this.userModel.findOne({id: studentId});
-    if (!user) {
-      throw new BadRequestException('No student exist.');
-    }
+    await this.isStudentExist(studentId);
     await this.userModel.deleteOne({id: studentId});
     return;
   }
@@ -140,10 +131,17 @@ export class StudentService {
     return newsInfo;
   }
 
-  private async isIdUnique(id: string) {
+  private async isStudentUnique(id: string) {
     const user = await this.userModel.findOne({id});
     if (user) {
         throw new BadRequestException('Already exists student.');
+    }
+  }
+
+  private async isStudentExist(studentId: string) {
+    const user = await this.userModel.findOne({id: studentId});
+    if (!user) {
+      throw new BadRequestException('No student exist.');
     }
   }
 }

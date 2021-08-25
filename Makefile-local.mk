@@ -33,7 +33,7 @@ service-down:
 
 clean: service-down infra-clean network-clean
 
-integrated-test: clean infra service
-	@cd test && make -f Makefile-for-intgrated-test.mk test && cd -
+test: clean infra service
+	@cd test && make -f Makefile-test.mk test && cd -
 
 .PHONY: clean network network-clean infra infra-down infra-clean service-install service-build service-up service-down integrated-test

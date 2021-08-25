@@ -191,6 +191,7 @@ export class PageController {
     description: errorMessageConst.InternalServerError, 
     schema: { type: 'object', properties: errorResponseConst } 
   })
+  @ApiOkResponse({ description: 'Ok.' })
   async updateOne(
     @Headers('Authorization') authorization: string,
     @Param('pageId') pageId: string,
@@ -224,6 +225,7 @@ export class PageController {
     description: errorMessageConst.InternalServerError, 
     schema: { type: 'object', properties: errorResponseConst } 
   })
+  @ApiOkResponse({ description: 'Ok.' })
   async deleteOne(
     @Headers('Authorization') authorization: string,
     @Param('pageId') pageId: string

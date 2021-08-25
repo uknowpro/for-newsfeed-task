@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNotEmpty, IsObject, IsArray } from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional, IsObject, IsArray } from 'class-validator';
 
 export class CreateStudentDto {
   @ApiProperty({
@@ -31,6 +31,7 @@ export class CreateStudentDto {
     default: [],
     example: ['1', '2']
   })
+  @IsOptional()
   @IsArray()
   subscriptionPages?: [];
 
@@ -39,6 +40,7 @@ export class CreateStudentDto {
     default: {},
     example: {}
   })
+  @IsOptional()
   @IsObject()
   extra?: {};
 }
