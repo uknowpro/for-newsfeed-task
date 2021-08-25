@@ -29,7 +29,7 @@ service-up: service-build
 service: service-install service-build service-up
 
 service-down:
-	@pm2 delete 0
+	@pm2 delete newsfeed-bff
 
 clean: service-down infra-clean network-clean
 

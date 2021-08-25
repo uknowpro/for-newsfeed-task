@@ -1,6 +1,6 @@
 # 뉴스피드 기능 구현을 위한 Backend for frontend 개발
 
-뉴스피드는 학생들에게 학교에서 관리되는 페이지들에서 발행된 소식들을 볼 수 있는 서비스입니다. 이 서비스를 제공하기 위해, 뉴스피드 BFF에서는 REST API기반의 백엔드 서비스를 제공합니다.
+뉴스피드는 학생들이 학교에서 관리되는 페이지들에서 발행된 소식들을 볼 수 있는 서비스입니다. 이 서비스를 제공하기 위해, 뉴스피드 BFF에서는 REST API기반의 백엔드 서비스를 제공합니다.
 
 뉴스피드 BFF는 nest.js를 기반으로 동작하며, node.js 환경에서 구동되는 어플리케이션입니다. 본 어플리케이션을 로컬 환경에서 구동하고자 한다면, 아래의 가이드를 참고하시기 바랍니다.
 
@@ -33,7 +33,10 @@ $ sudo npm install newman
 
 ## 구동 방법
 **로컬 환경에서 newsfeed BFF를 구동하기전에, 반드시 MongoDB를 설치 및 실행해야 합니다.**
+
 ### MongoDB 실행
+**아래의 커맨드로 MongoDB를 실행하기 위해서는 non-root user로 도커를 관리할 수 있어야 합니다.**
+참조: https://docs.docker.com/engine/install/linux-postinstall/
 ```
 $ makefile -f Makefile-local.mk infra
 ```
