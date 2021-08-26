@@ -3,6 +3,7 @@ import { exceptionConst, errorMessageConst } from '../constants';
 
 export class ErrorResponse {
   @ApiProperty({
+    required: true,
     example: [
         exceptionConst.BadRequestException,
         exceptionConst.ForbiddenException,
@@ -14,6 +15,7 @@ export class ErrorResponse {
   errorType: string;
 
   @ApiProperty({
+    required: true,
     example: [
       errorMessageConst.BadRequest,
       errorMessageConst.Forbidden,
@@ -25,6 +27,7 @@ export class ErrorResponse {
   errorMessage: string;
 
   @ApiProperty({
+    required: true,
   })
   errors: [object, string];
 }

@@ -610,6 +610,468 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "IsUniqueResource",
+			"item": [
+				{
+					"name": "POST /v1/students",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 400ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+									"});\r",
+									"pm.environment.set(\"STUDENT_ID\", \"12345\");\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"studentId\": \"12345\",\r\n  \"password\": \"패스워드\",\r\n  \"name\": \"학생 명\",\r\n  \"subscriptionPages\": [\r\n    \"1\",\r\n    \"2\"\r\n  ],\r\n  \"extra\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{NEWSFEED_HOST}}/v1/students",
+							"host": [
+								"{{NEWSFEED_HOST}}"
+							],
+							"path": [
+								"v1",
+								"students"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST /v1/pages/{pageId}/news",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 400ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+									"});\r",
+									"var schema = {\r",
+									"    'type': 'object',\r",
+									"    'required': [\r",
+									"        'data',\r",
+									"    ],\r",
+									"    'properties': {\r",
+									"        'data': {\r",
+									"            'type': 'array',\r",
+									"            'items': {\r",
+									"                'required': [\r",
+									"                    'newsId', 'title', 'content', 'extra'\r",
+									"                ],\r",
+									"                'properties': {\r",
+									"                    'newsId': {'type': 'string','nullable': false},\r",
+									"                    'title': {'type': 'string','nullable': false},\r",
+									"                    'content': {'type': 'string','nullable': false},\r",
+									"                    'createdAt': {'type': 'string','nullable': false},\r",
+									"                    'extra': {'type': 'object','nullable': false},\r",
+									"                }\r",
+									"            }\r",
+									"        },\r",
+									"        'extraData': {'type': 'object','nullable': false}\r",
+									"    }\r",
+									"};\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test('Reponse Body Schema is valid', function() {\r",
+									"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;\r",
+									"});\r",
+									"pm.test(\"Check the length of the response\", function () {\r",
+									"    pm.expect(Object.keys(jsonData.data).length).to.equal(1);\r",
+									"});\r",
+									"pm.environment.set(\"NEWS_ID\", jsonData.data[0].newsId);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ADMIN_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"제목\",\r\n  \"content\": \"내용\",\r\n  \"extra\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{NEWSFEED_HOST}}/v1/pages/{{PAGE_ID}}/news",
+							"host": [
+								"{{NEWSFEED_HOST}}"
+							],
+							"path": [
+								"v1",
+								"pages",
+								"{{PAGE_ID}}",
+								"news"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Must student be unique",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 400ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+									"});\r",
+									"var schema = {\r",
+									"    'type': 'object',\r",
+									"    'required': [\r",
+									"        'errorType', 'errorMessage', 'errors'\r",
+									"    ],\r",
+									"    'properties': {\r",
+									"        'errorType': {'type': 'string','nullable': false},\r",
+									"        'errorMessage': {'type': 'string','nullable': false},\r",
+									"        'errors': {\r",
+									"            'type': 'array'\r",
+									"        },\r",
+									"    }\r",
+									"};\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test('Reponse Body Schema is valid', function() {\r",
+									"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"studentId\": \"12345\",\r\n  \"password\": \"패스워드\",\r\n  \"name\": \"학생 명\",\r\n  \"subscriptionPages\": [\r\n    \"1\",\r\n    \"2\"\r\n  ],\r\n  \"extra\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{NEWSFEED_HOST}}/v1/students",
+							"host": [
+								"{{NEWSFEED_HOST}}"
+							],
+							"path": [
+								"v1",
+								"students"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Must page be unique",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 400ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+									"});\r",
+									"var schema = {\r",
+									"    'type': 'object',\r",
+									"    'required': [\r",
+									"        'errorType', 'errorMessage', 'errors'\r",
+									"    ],\r",
+									"    'properties': {\r",
+									"        'errorType': {'type': 'string','nullable': false},\r",
+									"        'errorMessage': {'type': 'string','nullable': false},\r",
+									"        'errors': {\r",
+									"            'type': 'array'\r",
+									"        },\r",
+									"    }\r",
+									"};\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test('Reponse Body Schema is valid', function() {\r",
+									"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ADMIN_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"schoolName\": \"학교 명\",\r\n  \"region\": \"지역 명\",\r\n  \"name\": \"페이지 명\",\r\n  \"description\": \"페이지 설명\",\r\n  \"extra\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{NEWSFEED_HOST}}/v1/pages",
+							"host": [
+								"{{NEWSFEED_HOST}}"
+							],
+							"path": [
+								"v1",
+								"pages"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Must news be unique",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 400ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+									"});\r",
+									"var schema = {\r",
+									"    'type': 'object',\r",
+									"    'required': [\r",
+									"        'errorType', 'errorMessage', 'errors'\r",
+									"    ],\r",
+									"    'properties': {\r",
+									"        'errorType': {'type': 'string','nullable': false},\r",
+									"        'errorMessage': {'type': 'string','nullable': false},\r",
+									"        'errors': {\r",
+									"            'type': 'array'\r",
+									"        },\r",
+									"    }\r",
+									"};\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test('Reponse Body Schema is valid', function() {\r",
+									"    pm.expect(tv4.validate(jsonData, schema)).to.be.true;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ADMIN_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"제목\",\r\n  \"content\": \"내용\",\r\n  \"extra\": {}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{NEWSFEED_HOST}}/v1/pages/{{PAGE_ID}}/news",
+							"host": [
+								"{{NEWSFEED_HOST}}"
+							],
+							"path": [
+								"v1",
+								"pages",
+								"{{PAGE_ID}}",
+								"news"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DEL /v1/pages/{pageId}/news/{newsId}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 400ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ADMIN_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{NEWSFEED_HOST}}/v1/pages/{{PAGE_ID}}/news/{{NEWS_ID}}",
+							"host": [
+								"{{NEWSFEED_HOST}}"
+							],
+							"path": [
+								"v1",
+								"pages",
+								"{{PAGE_ID}}",
+								"news",
+								"{{NEWS_ID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DEL /v1/pages/{pageId}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 400ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{ADMIN_TOKEN}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{NEWSFEED_HOST}}/v1/pages/{{PAGE_ID}}",
+							"host": [
+								"{{NEWSFEED_HOST}}"
+							],
+							"path": [
+								"v1",
+								"pages",
+								"{{PAGE_ID}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DEL /v1/students/{studentId}",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 400ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer MTIzNDU67Yyo7Iqk7JuM65Oc",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{NEWSFEED_HOST}}/v1/students/{{STUDENT_ID}}",
+							"host": [
+								"{{NEWSFEED_HOST}}"
+							],
+							"path": [
+								"v1",
+								"students",
+								"{{STUDENT_ID}}"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }

@@ -36,4 +36,4 @@ clean: service-down infra-clean network-clean
 test: clean infra service
 	@cd test && make -f Makefile-test.mk test && cd -
 
-.PHONY: clean network network-clean infra infra-down infra-clean service-install service-build service-up service-down integrated-test
+.PHONY: clean network network-clean infra infra-down infra-clean service-install service-build service-up service-down test

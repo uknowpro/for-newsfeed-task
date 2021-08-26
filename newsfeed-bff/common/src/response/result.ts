@@ -1,5 +1,5 @@
-export abstract class Result<Array> {
-  static of<Array>(data: Array, extraData: any = null) {
+export abstract class Result<T> {
+  static of<T>(data: T, extraData: any = null) {
     return Object.setPrototypeOf(
       {
         data: data,

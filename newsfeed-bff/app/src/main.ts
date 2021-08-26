@@ -1,7 +1,7 @@
 import { NestFactory, Reflector } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
-import { RolesGuard, ExceptionFormatter } from '@newsfeed/common';
+import { RolesGuard, ExceptionFormatter, Logger } from '@newsfeed/common';
 import { AppModule } from './app.module';
 import { ValidationPipe } from './validation.pipe';
 
@@ -10,6 +10,7 @@ async function bootstrap() {
   const configService: ConfigService = app.get(ConfigService);
   const reflector = app.get(Reflector);
 
+  app.useLogger(configService.get('log').levels);
   app.setGlobalPrefix('v1');
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new ExceptionFormatter());

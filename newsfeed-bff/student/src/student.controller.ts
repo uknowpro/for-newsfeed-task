@@ -46,7 +46,7 @@ export class StudentController {
   })
   @ApiBadRequestResponse({ 
     description: errorMessageConst.BadRequest, 
-    schema: { type: 'object', properties: errorResponseConst } 
+    schema: { type: 'object', required: ['errorType', 'errorMessage', 'errors'], properties: errorResponseConst } 
   })
   @ApiForbiddenResponse({ 
     description: errorMessageConst.Forbidden, 
@@ -54,7 +54,7 @@ export class StudentController {
   })
   @ApiInternalServerErrorResponse({ 
     description: errorMessageConst.InternalServerError, 
-    schema: { type: 'object', properties: errorResponseConst } 
+    schema: { type: 'object', required: ['errorType', 'errorMessage', 'errors'], properties: errorResponseConst } 
   })
   @ApiResponse({
     status: 201,
@@ -82,7 +82,7 @@ export class StudentController {
   @ApiHeader(apiHeaderConst)
   @ApiBadRequestResponse({ 
     description: errorMessageConst.BadRequest, 
-    schema: { type: 'object', properties: errorResponseConst } 
+    schema: { type: 'object', required: ['errorType', 'errorMessage', 'errors'], properties: errorResponseConst } 
   })
   @ApiForbiddenResponse({ 
     description: errorMessageConst.Forbidden, 
@@ -90,7 +90,7 @@ export class StudentController {
   })
   @ApiInternalServerErrorResponse({ 
     description: errorMessageConst.InternalServerError, 
-    schema: { type: 'object', properties: errorResponseConst } 
+    schema: { type: 'object', required: ['errorType', 'errorMessage', 'errors'], properties: errorResponseConst } 
   })
   @ApiResponse({
     status: 200,
@@ -129,7 +129,7 @@ export class StudentController {
   @ApiHeader(apiHeaderConst)
   @ApiBadRequestResponse({ 
     description: errorMessageConst.BadRequest, 
-    schema: { type: 'object', properties: errorResponseConst } 
+    schema: { type: 'object', required: ['errorType', 'errorMessage', 'errors'], properties: errorResponseConst } 
   })
   @ApiForbiddenResponse({ 
     description: errorMessageConst.Forbidden, 
@@ -137,7 +137,7 @@ export class StudentController {
   })
   @ApiInternalServerErrorResponse({ 
     description: errorMessageConst.InternalServerError, 
-    schema: { type: 'object', properties: errorResponseConst } 
+    schema: { type: 'object', required: ['errorType', 'errorMessage', 'errors'], properties: errorResponseConst } 
   })
   @ApiOkResponse({ description: 'Ok.' })
   async updateOne(
@@ -167,7 +167,7 @@ export class StudentController {
   @ApiHeader(apiHeaderConst)
   @ApiBadRequestResponse({ 
     description: errorMessageConst.BadRequest, 
-    schema: { type: 'object', properties: errorResponseConst } 
+    schema: { type: 'object', required: ['errorType', 'errorMessage', 'errors'], properties: errorResponseConst } 
   })
   @ApiForbiddenResponse({ 
     description: errorMessageConst.Forbidden, 
@@ -175,7 +175,7 @@ export class StudentController {
   })
   @ApiInternalServerErrorResponse({ 
     description: errorMessageConst.InternalServerError, 
-    schema: { type: 'object', properties: errorResponseConst } 
+    schema: { type: 'object', required: ['errorType', 'errorMessage', 'errors'], properties: errorResponseConst } 
   })
   @ApiOkResponse({ description: 'Ok.' })
   async patchOne(
@@ -204,7 +204,7 @@ export class StudentController {
   @ApiHeader(apiHeaderConst)
   @ApiBadRequestResponse({ 
     description: errorMessageConst.BadRequest, 
-    schema: { type: 'object', properties: errorResponseConst } 
+    schema: { type: 'object', required: ['errorType', 'errorMessage', 'errors'], properties: errorResponseConst } 
   })
   @ApiForbiddenResponse({ 
     description: errorMessageConst.Forbidden, 
@@ -212,7 +212,7 @@ export class StudentController {
   })
   @ApiInternalServerErrorResponse({ 
     description: errorMessageConst.InternalServerError, 
-    schema: { type: 'object', properties: errorResponseConst } 
+    schema: { type: 'object', required: ['errorType', 'errorMessage', 'errors'], properties: errorResponseConst } 
   })
   @ApiOkResponse({ description: 'Ok.' })
   async deleteOne(
@@ -242,7 +242,7 @@ export class StudentController {
   @ApiHeader(apiHeaderConst)
   @ApiBadRequestResponse({ 
     description: errorMessageConst.BadRequest, 
-    schema: { type: 'object', properties: errorResponseConst } 
+    schema: { type: 'object', required: ['errorType', 'errorMessage', 'errors'], properties: errorResponseConst } 
   })
   @ApiForbiddenResponse({ 
     description: errorMessageConst.Forbidden, 
@@ -250,7 +250,7 @@ export class StudentController {
   })
   @ApiInternalServerErrorResponse({ 
     description: errorMessageConst.InternalServerError, 
-    schema: { type: 'object', properties: errorResponseConst } 
+    schema: { type: 'object', required: ['errorType', 'errorMessage', 'errors'], properties: errorResponseConst } 
   })
   @ApiResponse({
     status: 200,

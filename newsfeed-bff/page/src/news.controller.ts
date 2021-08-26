@@ -46,15 +46,15 @@ export class NewsController {
   @ApiHeader(apiHeaderConst)
   @ApiBadRequestResponse({ 
     description: errorMessageConst.BadRequest, 
-    schema: { type: 'object', properties: errorResponseConst } 
+schema: { type: 'object', required: ['errorType', 'errorMessage', 'errors'], properties: errorResponseConst } 
   })
   @ApiForbiddenResponse({ 
     description: errorMessageConst.Forbidden, 
-    schema: { type: 'object', properties: errorResponseConst }
+schema: { type: 'object', required: ['errorType', 'errorMessage', 'errors'], properties: errorResponseConst } 
   })
   @ApiInternalServerErrorResponse({ 
-    description: errorMessageConst.InternalServerError, 
-    schema: { type: 'object', properties: errorResponseConst } 
+    description: errorMessageConst.InternalServerError,
+schema: { type: 'object', required: ['errorType', 'errorMessage', 'errors'], properties: errorResponseConst } 
   })
   @ApiResponse({
     status: 201,
@@ -92,7 +92,7 @@ export class NewsController {
   @ApiHeader(apiHeaderConst)
   @ApiBadRequestResponse({ 
     description: errorMessageConst.BadRequest, 
-    schema: { type: 'object', properties: errorResponseConst } 
+    schema: { type: 'object', required: ['errorType', 'errorMessage', 'errors'], properties: errorResponseConst } 
   })
   @ApiForbiddenResponse({ 
     description: errorMessageConst.Forbidden, 
@@ -100,7 +100,7 @@ export class NewsController {
   })
   @ApiInternalServerErrorResponse({ 
     description: errorMessageConst.InternalServerError, 
-    schema: { type: 'object', properties: errorResponseConst } 
+    schema: { type: 'object', required: ['errorType', 'errorMessage', 'errors'], properties: errorResponseConst } 
   })
   @ApiResponse({
     status: 200,
@@ -136,7 +136,7 @@ export class NewsController {
   @ApiHeader(apiHeaderConst)
   @ApiBadRequestResponse({ 
     description: errorMessageConst.BadRequest, 
-    schema: { type: 'object', properties: errorResponseConst } 
+    schema: { type: 'object', required: ['errorType', 'errorMessage', 'errors'], properties: errorResponseConst } 
   })
   @ApiForbiddenResponse({ 
     description: errorMessageConst.Forbidden, 
@@ -144,7 +144,7 @@ export class NewsController {
   })
   @ApiInternalServerErrorResponse({ 
     description: errorMessageConst.InternalServerError, 
-    schema: { type: 'object', properties: errorResponseConst } 
+    schema: { type: 'object', required: ['errorType', 'errorMessage', 'errors'], properties: errorResponseConst } 
   })
   @ApiResponse({
     status: 200,
@@ -181,7 +181,7 @@ export class NewsController {
   @ApiHeader(apiHeaderConst)
   @ApiBadRequestResponse({ 
     description: errorMessageConst.BadRequest, 
-    schema: { type: 'object', properties: errorResponseConst } 
+    schema: { type: 'object', required: ['errorType', 'errorMessage', 'errors'], properties: errorResponseConst } 
   })
   @ApiForbiddenResponse({ 
     description: errorMessageConst.Forbidden, 
@@ -189,7 +189,7 @@ export class NewsController {
   })
   @ApiInternalServerErrorResponse({ 
     description: errorMessageConst.InternalServerError, 
-    schema: { type: 'object', properties: errorResponseConst } 
+    schema: { type: 'object', required: ['errorType', 'errorMessage', 'errors'], properties: errorResponseConst } 
   })
   @ApiOkResponse({ description: 'Ok.' })
   async updateOne(
@@ -216,7 +216,7 @@ export class NewsController {
   @ApiHeader(apiHeaderConst)
   @ApiBadRequestResponse({ 
     description: errorMessageConst.BadRequest, 
-    schema: { type: 'object', properties: errorResponseConst } 
+    schema: { type: 'object', required: ['errorType', 'errorMessage', 'errors'], properties: errorResponseConst } 
   })
   @ApiForbiddenResponse({ 
     description: errorMessageConst.Forbidden, 
@@ -224,7 +224,7 @@ export class NewsController {
   })
   @ApiInternalServerErrorResponse({ 
     description: errorMessageConst.InternalServerError, 
-    schema: { type: 'object', properties: errorResponseConst } 
+    schema: { type: 'object', required: ['errorType', 'errorMessage', 'errors'], properties: errorResponseConst } 
   })
   @ApiOkResponse({ description: 'Ok.' })
   async deleteOne(
