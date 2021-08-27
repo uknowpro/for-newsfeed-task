@@ -38,12 +38,12 @@ $ sudo npm install -g newman
 **아래의 커맨드로 MongoDB를 실행하기 위해서는 non-root user로 도커를 관리할 수 있어야 합니다.**
 참조: https://docs.docker.com/engine/install/linux-postinstall/
 ```
-$ makefile -f Makefile-local.mk infra
+$ make -f Makefile-local.mk infra
 ```
 
 ### newsfeed BFF 설치 및 실행
 ```
-$ makefile -f Makefile-local.mk service
+$ make -f Makefile-local.mk service
 ```
 ```
 lerna success run Ran npm script 'build' in 4 packages in 34.8s:
@@ -64,7 +64,7 @@ lerna success - @newsfeed/student
 **로컬 환경에서 테스트를 실행 하려면, 사전 설치 및 MongoDB 실행이 완료되어야 합니다.**
 **아래의 커맨드는 수행완료까지 테스트 환경에 따라 약 1~5분 가량 소요될 수 있습니다.**
 ```
-$ makefile -f Makefile-local.mk test
+$ make -f Makefile-local.mk test
 ```
 ### 테스트 결과 예시
 ```

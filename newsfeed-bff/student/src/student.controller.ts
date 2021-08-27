@@ -1,4 +1,4 @@
-import { Req, Body, Controller, Get, Put, Patch, Headers, Param, Post, Delete, HttpException, HttpStatus, SetMetadata } from '@nestjs/common';
+import { Req, Body, Controller, Get, Put, Patch, Headers, Query, Param, Post, Delete, HttpException, HttpStatus, SetMetadata } from '@nestjs/common';
 import { 
   ApiBearerAuth, 
   ApiOperation, 
@@ -267,7 +267,7 @@ export class StudentController {
   async findSubscriptionNewsAll(
     @Headers('Authorization') authorization: string, 
     @Param('studentId') studentId: string,
-    @Param('pageId') pageId?: string
+    @Query('pageId') pageId?: string
   ): Promise<Result<SubscriptionNewsResponse[]>> {
     try {
       const token: string = authorization.replace('Bearer ', '');
